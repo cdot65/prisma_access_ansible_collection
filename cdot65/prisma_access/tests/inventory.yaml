@@ -1,0 +1,6 @@
+all:
+  hosts:
+    prisma:
+      ansible_host: "sase.paloaltonetworks.com"
+  vars:
+    ansible_python_interpreter: "/home/cdot/.cache/pypoetry/virtualenvs/prisma-access-ansible-collection-PCQjEonv-py3.10/bin/python"

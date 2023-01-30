@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "prisma-access-ansible-collection"
+version = "0.1.0"
+description = "Ansible Collection for Palo Alto Networks Prisma Access solution"
+authors = ["Calvin Remsburg <cremsburg.dev@gmail.com>"]
+license = "Apache 2.0"
+readme = "README.md"
+packages = [{include = "prisma_access_ansible_collection"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+ansible = "^7.1.0"
+panapi = {git = "git@github.com:cdot65/panapi.git"}
+
+[tool.poetry.group.dev.dependencies]
+black = "^22.12.0"
+flake8 = "^6.0.0"
+bandit = "^1.7.4"
+pymarkdownlnt = "^0.9.8"
+ipdb = "^0.13.11"
+ipython = "^8.9.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 79

@@ -1,0 +1,12 @@
+ancestor: null
+releases:
+  0.1.0:
+    changes:
+      release_summary: "This is the first release of an Ansible Collection for Prisma Access."
+    fragments:
+      - release-v0.1.0.yml
+    modules:
+      - description: Creates or removes tag objects from Prisma Access
+        name: tag
+        namespace: ""
+    release_date: "2023-01-29"

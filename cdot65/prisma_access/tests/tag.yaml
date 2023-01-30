@@ -1,0 +1,22 @@
+---
+# CONFIGURE TAG OBJECTS
+- hosts: prisma
+  connection: local
+  gather_facts: False
+  become: False
+  collections:
+    - cdot65.prisma_access
+
+  tasks:
+    - name: Create tags
+      cdot65.prisma_access.tag:
+        provider:
+          client_id: "{{ client_id }}"
+          client_secret: "{{ client_secret }}"
+          scope: "{{ scope }}"
+        name: "{{ item.name }}"
+        color: "{{ item.color }}"
+        comments: "{{ item.comments }}"
+        folder: "Service Connections"
+        state: "present"
+      loop: "{{ prisma_tags }}"

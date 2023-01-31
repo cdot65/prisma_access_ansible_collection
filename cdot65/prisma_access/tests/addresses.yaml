@@ -1,0 +1,119 @@
+---
+# CONFIGURE ADDRESS OBJECTS
+- hosts: prisma
+  connection: local
+  gather_facts: False
+  become: False
+  collections:
+    - cdot65.prisma_access
+
+  tasks:
+    - name: Create ip-netmask address objects
+      cdot65.prisma_access.addresses:
+        provider:
+          client_id: "{{ client_id }}"
+          client_secret: "{{ client_secret }}"
+          scope: "{{ scope }}"
+        description: "{{ item.description }}"
+        folder: "{{ item.folder }}"
+        ip_netmask: "{{ item.ip_netmask }}"
+        name: "{{ item.name }}"
+        state: "present"
+        tag: "{{ item.tag }}"
+      loop: "{{ prisma_netmask_addresses }}"
+
+    - name: Create ip-range address objects
+      cdot65.prisma_access.addresses:
+        provider:
+          client_id: "{{ client_id }}"
+          client_secret: "{{ client_secret }}"
+          scope: "{{ scope }}"
+        description: "{{ item.description }}"
+        folder: "{{ item.folder }}"
+        ip_range: "{{ item.ip_range }}"
+        name: "{{ item.name }}"
+        state: "present"
+        tag: "{{ item.tag }}"
+      loop: "{{ prisma_range_addresses }}"
+
+    - name: Create fqdn address objects
+      cdot65.prisma_access.addresses:
+        provider:
+          client_id: "{{ client_id }}"
+          client_secret: "{{ client_secret }}"
+          scope: "{{ scope }}"
+        description: "{{ item.description }}"
+        folder: "{{ item.folder }}"
+        fqdn: "{{ item.fqdn }}"
+        name: "{{ item.name }}"
+        state: "present"
+        tag: "{{ item.tag }}"
+      loop: "{{ prisma_fqdn_addresses }}"
+
+    - name: Create wildcard address objects
+      cdot65.prisma_access.addresses:
+        provider:
+          client_id: "{{ client_id }}"
+          client_secret: "{{ client_secret }}"
+          scope: "{{ scope }}"
+        description: "{{ item.description }}"
+        folder: "{{ item.folder }}"
+        ip_wildcard: "{{ item.ip_wildcard }}"
+        name: "{{ item.name }}"
+        state: "present"
+      loop: "{{ prisma_wildcard_addresses }}"
+
+    - name: Delete ip-netmask address objects
+      cdot65.prisma_access.addresses:
+        provider:
+          client_id: "{{ client_id }}"
+          client_secret: "{{ client_secret }}"
+          scope: "{{ scope }}"
+        description: "{{ item.description }}"
+        folder: "{{ item.folder }}"
+        ip_netmask: "{{ item.ip_netmask }}"
+        name: "{{ item.name }}"
+        state: "absent"
+        tag: "{{ item.tag }}"
+      loop: "{{ prisma_netmask_addresses }}"
+
+    - name: Delete ip-range address objects
+      cdot65.prisma_access.addresses:
+        provider:
+          client_id: "{{ client_id }}"
+          client_secret: "{{ client_secret }}"
+          scope: "{{ scope }}"
+        description: "{{ item.description }}"
+        folder: "{{ item.folder }}"
+        ip_range: "{{ item.ip_range }}"
+        name: "{{ item.name }}"
+        state: "absent"
+        tag: "{{ item.tag }}"
+      loop: "{{ prisma_range_addresses }}"
+
+    - name: Delete fqdn address objects
+      cdot65.prisma_access.addresses:
+        provider:
+          client_id: "{{ client_id }}"
+          client_secret: "{{ client_secret }}"
+          scope: "{{ scope }}"
+        description: "{{ item.description }}"
+        folder: "{{ item.folder }}"
+        fqdn: "{{ item.fqdn }}"
+        name: "{{ item.name }}"
+        state: "absent"
+        tag: "{{ item.tag }}"
+      loop: "{{ prisma_fqdn_addresses }}"
+
+    - name: Delete wildcard address objects
+      cdot65.prisma_access.addresses:
+        provider:
+          client_id: "{{ client_id }}"
+          client_secret: "{{ client_secret }}"
+          scope: "{{ scope }}"
+        description: "{{ item.description }}"
+        folder: "{{ item.folder }}"
+        ip_wildcard: "{{ item.ip_wildcard }}"
+        name: "{{ item.name }}"
+        state: "absent"
+      loop: "{{ prisma_wildcard_addresses }}"

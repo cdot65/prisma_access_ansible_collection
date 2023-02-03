@@ -35,7 +35,7 @@ license_file: ""
 # requirements as 'namespace' and 'name'
 tags:
   - "firewall"
-  - "network security"
+  - "security"
   - "networking"
   - "sase"
   - "sdwan"

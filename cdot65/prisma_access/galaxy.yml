@@ -8,7 +8,7 @@ namespace: cdot65
 name: prisma_access
 
 # The version of the collection. Must be compatible with semantic versioning
-version: 0.1.0
+version: 0.1.1
 
 # The path to the Markdown (.md) readme file. This path is relative to the root of the collection
 readme: README.md
@@ -35,7 +35,7 @@ license_file: ""
 # requirements as 'namespace' and 'name'
 tags:
   - "firewall"
-  - "network security"
+  - "security"
   - "networking"
   - "sase"
   - "sdwan"
@@ -47,15 +47,19 @@ tags:
 # range specifiers can be set and are separated by ','
 dependencies: {}
 
-repository: http://example.com/repository
+repository: https://github.com/cdot65/prisma_access_ansible_collection
 
-documentation: http://docs.example.com
+documentation: https://github.com/cdot65/prisma_access_ansible_collection/blob/main/README.md
 
-homepage: http://example.com
+homepage: https://github.com/cdot65/prisma_access_ansible_collection
 
-issues: http://example.com/issue/tracker
+issues: https://github.com/cdot65/prisma_access_ansible_collection/issues
 
 build_ignore:
   - "*.env"
   - "*.tar.gz"
-  - "auth.yaml"
+  - ".vscode"
+  - "development"
+  - "cdot65/prisma_access/development"
+  - "docker-compose.yml"
+  - "tests/group_vars/prisma/auth.yaml"

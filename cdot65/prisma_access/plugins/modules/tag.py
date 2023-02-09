@@ -58,8 +58,8 @@ options:
     comments:
         description:
             - Additional comments about the tag
-        required=False,
-        type='str'
+        required: False
+        type: str
     state:
         description:
             - declare whether you want the resource to exist or be deleted

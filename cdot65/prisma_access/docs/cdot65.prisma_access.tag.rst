@@ -20,7 +20,7 @@ Under construction
 Example
 -------
 
-Here is a basic example of using the module to mange your resources in Apstra
+Here is a basic example of using the module to mange your tags in Prisma Access
 
 .. code-block:: yaml
 

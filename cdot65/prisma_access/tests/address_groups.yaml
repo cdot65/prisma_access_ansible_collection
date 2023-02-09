@@ -33,6 +33,8 @@
         description: "This is just a test"
         folder: "Service Connections"
         state: "present"
+        tag:
+          - "ansible-test"
 
     - name: Create address group
       cdot65.prisma_access.address_groups:
@@ -46,6 +48,8 @@
         description: "This is just a test"
         folder: "Service Connections"
         state: "present"
+        tag:
+          - "ansible-test"
 
     - name: Remove address group
       cdot65.prisma_access.address_groups:

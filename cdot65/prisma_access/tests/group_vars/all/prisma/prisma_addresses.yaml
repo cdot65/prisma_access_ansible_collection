@@ -1,0 +1,52 @@
+---
+prisma_netmask_addresses:
+  - ip_netmask: "100.10.254.0/24"
+    name: "Ansible Test 1"
+    description: "This is a test of netmask address objects"
+    folder: "Service Connections"
+    tag:
+      - "Automation"
+  - ip_netmask: "100.10.255.0/24"
+    name: "Ansible Test 2"
+    description: "This is another test of netmask address objects"
+    folder: "Service Connections"
+    tag:
+      - "Automation"
+
+prisma_range_addresses:
+  - ip_range: "100.10.254.10-100.10.254.99"
+    name: "Ansible Test 3"
+    description: "This is a test of range address objects"
+    folder: "Service Connections"
+    tag:
+      - "Automation"
+  - ip_range: "100.10.255.10-100.10.255.99"
+    name: "Ansible Test 4"
+    description: "This is another test of range address objects"
+    folder: "Service Connections"
+    tag:
+      - "Automation"
+
+prisma_fqdn_addresses:
+  - fqdn: "redtail.com"
+    name: "Ansible Test 5"
+    description: "This is a test of fqdn address objects"
+    folder: "Service Connections"
+    tag:
+      - "Automation"
+  - fqdn: "developer.redtail.com"
+    name: "Ansible Test 6"
+    description: "This is another test of fqdn address objects"
+    folder: "Service Connections"
+    tag:
+      - "Automation"
+
+prisma_wildcard_addresses:
+  - ip_wildcard: "100.0.0.0/0.0.248.255"
+    name: "Ansible Test 7"
+    description: "This is a test of wildcard address objects"
+    folder: "Service Connections"
+  - ip_wildcard: "100.0.6.0/0.0.248.255"
+    name: "Ansible Test 8"
+    description: "This is another test of wildcard address objects"
+    folder: "Service Connections"

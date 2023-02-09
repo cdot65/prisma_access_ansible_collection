@@ -1,5 +1,15 @@
 ancestor: null
 releases:
+  0.1.1:
+    changes:
+      release_summary: "This corrects authentication and introduces Address Objects."
+    fragments:
+      - release-v0.1.1.yml
+    modules:
+      - description: Creates or removes address objects from Prisma Access
+        name: addresses
+        namespace: ""
+    release_date: "2023-02-09"
   0.1.0:
     changes:
       release_summary: "This is the first release of an Ansible Collection for Prisma Access."

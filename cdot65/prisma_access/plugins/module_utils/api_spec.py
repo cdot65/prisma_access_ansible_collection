@@ -138,3 +138,75 @@ class PrismaAccessSpec:
                 type="list",
             ),
         )
+
+    @staticmethod
+    def address_groups_spec():
+        """Return the address groups object spec."""
+        return dict(
+            description=dict(
+                max_length=1023,
+                required=True,
+                type="str",
+            ),
+            dynamic=dict(
+                required=False,
+                type="dict",
+                options=dict(
+                    filter=dict(
+                        required=True,
+                        type="str",
+                    ),
+                ),
+            ),
+            folder=dict(
+                required=True,
+                choices=[
+                    "GlobalProtect",
+                    "Mobile Users",
+                    "Remote Networks",
+                    "Service Connections",
+                    "Shared",
+                ],
+                type="str",
+            ),
+            name=dict(
+                max_length=63,
+                required=True,
+                type="str",
+            ),
+            provider=dict(
+                required=True,
+                type="dict",
+                options=dict(
+                    client_id=dict(
+                        required=True,
+                        type="str",
+                    ),
+                    client_secret=dict(
+                        required=True,
+                        type="str",
+                    ),
+                    scope=dict(
+                        required=True,
+                        type="str",
+                    ),
+                ),
+            ),
+            state=dict(
+                required=True,
+                choices=["absent", "present"],
+                type="str",
+            ),
+            static=dict(
+                elements="str",
+                max_items=64,
+                required=False,
+                type="list",
+            ),
+            tag=dict(
+                elements="str",
+                max_items=64,
+                required=False,
+                type="list",
+            ),
+        )

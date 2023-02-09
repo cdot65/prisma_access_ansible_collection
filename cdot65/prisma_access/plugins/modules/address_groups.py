@@ -191,9 +191,9 @@ def main():
         )
 
         if module.params["static"]:
-            group.__setattr__("static", module.params["static"]["members"])
+            group.__setattr__("static", module.params["static"])
         elif module.params["dynamic"]:
-            group.__setattr__("filter", module.params["dynamic"]["filter"])
+            group.__setattr__("dynamic", module.params["dynamic"])
         else:
             module.fail_json(
                 msg="Must define either static or dynamic address group"
@@ -201,12 +201,13 @@ def main():
 
         already_exists = False
         existing_address_groups = group.list(session)
-        raise Exception(group)
 
         for each in existing_address_groups:
             if group.name == each.name:
                 already_exists = True
                 group.id = each.id
+
+        # raise Exception(already_exists)
 
         if module.params["state"] == "absent":
             if already_exists is True:

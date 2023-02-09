@@ -1,0 +1,87 @@
+---
+# CONFIGURE ADDRESS GROUP OBJECTS
+- hosts: prisma
+  connection: local
+  gather_facts: False
+  become: False
+  collections:
+    - cdot65.prisma_access
+
+  tasks:
+    - name: Create ip-netmask address objects
+      cdot65.prisma_access.addresses:
+        provider:
+          client_id: "{{ client_id }}"
+          client_secret: "{{ client_secret }}"
+          scope: "{{ scope }}"
+        description: "This is a test object"
+        folder: "Service Connections"
+        ip_netmask: "192.168.77.0/24"
+        name: "AnsibleTestAddress"
+        state: "present"
+        tag: "ansible-test"
+
+    - name: Create address group
+      cdot65.prisma_access.address_groups:
+        provider:
+          client_id: "{{ client_id }}"
+          client_secret: "{{ client_secret }}"
+          scope: "{{ scope }}"
+        name: "AnsibleTestGroupStatic"
+        static:
+          - "AnsibleTestAddress"
+        description: "This is just a test"
+        folder: "Service Connections"
+        state: "present"
+
+    - name: Create address group
+      cdot65.prisma_access.address_groups:
+        provider:
+          client_id: "{{ client_id }}"
+          client_secret: "{{ client_secret }}"
+          scope: "{{ scope }}"
+        name: "AnsibleTestGroupDynamic"
+        dynamic:
+          filter: "'ansible-test'"
+        description: "This is just a test"
+        folder: "Service Connections"
+        state: "present"
+
+    - name: Remove address group
+      cdot65.prisma_access.address_groups:
+        provider:
+          client_id: "{{ client_id }}"
+          client_secret: "{{ client_secret }}"
+          scope: "{{ scope }}"
+        name: "AnsibleTestGroupStatic"
+        static:
+          - "AnsibleTestAddress"
+        description: "This is just a test"
+        folder: "Service Connections"
+        state: "absent"
+
+    - name: Remove address group
+      cdot65.prisma_access.address_groups:
+        provider:
+          client_id: "{{ client_id }}"
+          client_secret: "{{ client_secret }}"
+          scope: "{{ scope }}"
+        name: "AnsibleTestGroupDynamic"
+        dynamic:
+          filter: "'ansible-test'"
+        description: "This is just a test"
+        folder: "Service Connections"
+        state: "absent"
+
+    - name: Remove ip-netmask address objects
+      cdot65.prisma_access.addresses:
+        provider:
+          client_id: "{{ client_id }}"
+          client_secret: "{{ client_secret }}"
+          scope: "{{ scope }}"
+        description: "This is a test object"
+        folder: "Service Connections"
+        ip_netmask: "192.168.77.0/24"
+        name: "AnsibleTestAddress"
+        state: "absent"
+        tag: "ansible-test"

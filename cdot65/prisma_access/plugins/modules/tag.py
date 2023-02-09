@@ -118,14 +118,14 @@ def main():
     module = AnsibleModule(argument_spec=PrismaAccessSpec.tag_spec())
 
     try:
-        auth = {
-            "client_id": module.params.get("client_id"),
-            "client_secret": module.params.get("client_secret"),
-            "scope": f"tsg_id:{module.params.get('scope')}",
-            "token_url": "https://auth.apps.paloaltonetworks.com/oauth2/access_token",
-        }
-        session = PanApiSession(auth)
-        session.authenticate()
+        auth = module.params.get("provider")
+        session = PanApiSession()
+        session.authenticate(
+            client_id=auth["client_id"],
+            client_secret=auth["client_secret"],
+            scope=f'profile tsg_id:{auth["scope"]} email',
+            token_url="https://auth.apps.paloaltonetworks.com/am/oauth2/access_token",
+        )
 
         # jwt isn't a float, causing an error of the token not being valid yet
         time.sleep(1)

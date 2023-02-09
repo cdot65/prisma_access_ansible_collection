@@ -39,6 +39,15 @@ options:
             - Description of the address object.
         required: false
         type: str
+    dynamic:
+        description:
+            - declare the address group object is dynamic
+        required: false
+        type: dict
+        options:
+            filter:
+                required: True
+                type: str
     folder:
         choices:
           - "Shared"
@@ -51,29 +60,9 @@ options:
             - declare where the object should reside.
         required: true
         type: str
-    fqdn:
-        description:
-            - value of a fully qualified domain name
-        required: false
-        type: str
-    ip_netmask:
-        description:
-            - value of a standard ip prefix formatted address
-        required: false
-        type: str
-    ip_range:
-        description:
-            - value of a range of IP address groups
-        required: false
-        type: str
-    ip_wildcard:
-        description:
-            - wildcard formatted ip address
-        required: false
-        type: str
     name:
         description:
-            - Value of the address object's name
+            - Value of the address group object's name
         required: true
         type: str
     state:
@@ -84,6 +73,11 @@ options:
           - 'absent'
           - 'present'
         type: str
+    static:
+        description:
+            - declare whether the address group object is static
+        required: false
+        type: list
 
 
 extends_documentation_fragment:
@@ -94,55 +88,34 @@ author:
 """
 
 EXAMPLES = r"""
-    - name: Create ip-netmask address group objects
+    - name: Create address group
       cdot65.prisma_access.address_groups:
         provider:
           client_id: "{{ client_id }}"
           client_secret: "{{ client_secret }}"
           scope: "{{ scope }}"
-        description: "this is an example description"
+        name: "AnsibleTestGroupStatic"
         folder: "Service Connections"
-        ip_netmask: "100.10.254.0/24"
-        name: "Ansible Test"
+        description: "This is just a test"
+        static:
+          - "AnsibleTestAddress"
+        tag:
+          - "ansible-test"
         state: "present"
-        tag: "Automation"
 
-    - name: Create ip-range address group objects
+    - name: Create address group
       cdot65.prisma_access.address_groups:
         provider:
           client_id: "{{ client_id }}"
           client_secret: "{{ client_secret }}"
           scope: "{{ scope }}"
-        description: "this is an example description"
+        name: "AnsibleTestGroupDynamic"
         folder: "Service Connections"
-        ip_range: "100.10.254.10-100.10.254.99"
-        name: "Ansible Test"
-        state: "present"
-        tag: "Automation"
-
-    - name: Create fqdn address group objects
-      cdot65.prisma_access.address_groups:
-        provider:
-          client_id: "{{ client_id }}"
-          client_secret: "{{ client_secret }}"
-          scope: "{{ scope }}"
-        description: "this is an example description"
-        folder: "Service Connections"
-        fqdn: "redtail.com"
-        name: "Ansible Test"
-        state: "present"
-        tag: "Automation"
-
-    - name: Create wildcard address group objects
-      cdot65.prisma_access.address_groups:
-        provider:
-          client_id: "{{ client_id }}"
-          client_secret: "{{ client_secret }}"
-          scope: "{{ scope }}"
-        description: "this is an example description"
-        folder: "Service Connections"
-        ip_wildcard: "100.0.6.0/0.0.248.255"
-        name: "Ansible Test"
+        description: "This is just a test"
+        dynamic:
+          filter: "'ansible-test'"
+        tag:
+          - "ansible-test"
         state: "present"
 
 """
@@ -189,6 +162,9 @@ def main():
             name=module.params["name"],
             state=module.params["state"],
         )
+
+        if module.params["tag"]:
+            group.__setattr__("tag", module.params["tag"])
 
         if module.params["static"]:
             group.__setattr__("static", module.params["static"])

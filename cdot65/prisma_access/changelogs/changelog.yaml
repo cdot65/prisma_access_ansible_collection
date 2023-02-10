@@ -1,5 +1,15 @@
 ancestor: null
 releases:
+  0.1.2:
+    changes:
+      release_summary: "Adds support for address group objects."
+    fragments:
+      - release-v0.1.2.yml
+    modules:
+      - description: Creates or removes address group objects from Prisma Access
+        name: addresses
+        namespace: ""
+    release_date: "2023-02-09"
   0.1.1:
     changes:
       release_summary: "This corrects authentication and introduces Address Objects."

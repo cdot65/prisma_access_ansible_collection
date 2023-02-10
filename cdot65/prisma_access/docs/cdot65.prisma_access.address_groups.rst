@@ -1,15 +1,15 @@
-==============================
-cdot65.prisma_access.addresses
-==============================
+===================================
+cdot65.prisma_access.address_groups
+===================================
 
-----------------------
-Manage address objects
-----------------------
+----------------------------
+Manage address group objects
+----------------------------
 
-addresses
-=========
+address_groups
+==============
 
-This module will allow you to manage your address objects within Prisma Access.
+This module will allow you to manage your address group objects within Prisma Access.
 
 Feature set as of version 0.1.1:
   - manage address objects
@@ -25,7 +25,7 @@ Here is a basic example of using the module to mange your address objects in Pri
 .. code-block:: yaml
 
     ---
-    # CONFIGURE ADDRESS OBJECTS
+    # CONFIGURE ADDRESS GROUP OBJECTS
     - hosts: prisma
       connection: local
       gather_facts: False
@@ -34,55 +34,59 @@ Here is a basic example of using the module to mange your address objects in Pri
         - cdot65.prisma_access
 
       tasks:
+        - name: Create tags
+          cdot65.prisma_access.tag:
+            provider:
+              client_id: "{{ client_id }}"
+              client_secret: "{{ client_secret }}"
+              scope: "{{ scope }}"
+            name: "ansible-test"
+            color: "Salmon"
+            comments: "This tag is used by Ansible"
+            folder: "Service Connections"
+            state: "present"
+
         - name: Create ip-netmask address objects
           cdot65.prisma_access.addresses:
             provider:
               client_id: "{{ client_id }}"
               client_secret: "{{ client_secret }}"
               scope: "{{ scope }}"
-            description: "This is an IP-Netmask address object"
+            description: "This is a test object"
             folder: "Service Connections"
-            ip_netmask: "1.1.1.1/32"
-            name: "Ansible-Test-1"
+            ip_netmask: "192.168.77.0/24"
+            name: "AnsibleTestAddress"
             state: "present"
-            tag: "Automation"
-        
-        - name: Create ip-range address objects
-          cdot65.prisma_access.addresses:
-            provider:
-              client_id: "{{ client_id }}"
-              client_secret: "{{ client_secret }}"
-              scope: "{{ scope }}"
-            description: "This is an IP-Range address object"
-            folder: "Service Connections"
-            ip_range: "192.168.1.10-192.168.1.99"
-            name: "Ansible-Test-2"
-            state: "present"
-            tag: "Automation"
+            tag: "ansible-test"
 
-        - name: Create fqdn address objects
-          cdot65.prisma_access.addresses:
+        - name: Create address group
+          cdot65.prisma_access.address_groups:
             provider:
               client_id: "{{ client_id }}"
               client_secret: "{{ client_secret }}"
               scope: "{{ scope }}"
-            description: "This is an FQDN address object"
-            folder: "Shared"
-            fqdn: "this.is.an.fqdn"
-            name: "Ansible-Test-3"
+            name: "AnsibleTestGroupStatic"
+            folder: "Service Connections"
+            description: "This is just a test"
+            static:
+              - "AnsibleTestAddress"
+            tag:
+              - "ansible-test"
             state: "present"
-            tag: "Automation"
-        
-        - name: Create wildcard address objects
-          cdot65.prisma_access.addresses:
+
+        - name: Create address group
+          cdot65.prisma_access.address_groups:
             provider:
               client_id: "{{ client_id }}"
               client_secret: "{{ client_secret }}"
               scope: "{{ scope }}"
-            description: "This is a wildcard address object"
-            folder: "Shared"
-            ip_wildcard: "10.20.1.0/0.0.248.255"
-            name: "Ansible-Test-4"
+            name: "AnsibleTestGroupDynamic"
+            folder: "Service Connections"
+            description: "This is just a test"
+            dynamic:
+              filter: "'ansible-test'"
+            tag:
+              - "ansible-test"
             state: "present"
 
 
@@ -93,13 +97,23 @@ If you'd like to see the options available for you within the module, have a loo
 
 .. code-block:: python
 
-    def addresses_spec():
-        """Return the address object spec."""
+    def address_groups_spec():
+        """Return the address groups object spec."""
         return dict(
             description=dict(
                 max_length=1023,
                 required=True,
                 type="str",
+            ),
+            dynamic=dict(
+                required=False,
+                type="dict",
+                options=dict(
+                    filter=dict(
+                        required=True,
+                        type="str",
+                    ),
+                ),
             ),
             folder=dict(
                 required=True,
@@ -110,22 +124,6 @@ If you'd like to see the options available for you within the module, have a loo
                     "Service Connections",
                     "Shared",
                 ],
-                type="str",
-            ),
-            fqdn=dict(
-                required=False,
-                type="str",
-            ),
-            ip_netmask=dict(
-                required=False,
-                type="str",
-            ),
-            ip_range=dict(
-                required=False,
-                type="str",
-            ),
-            ip_wildcard=dict(
-                required=False,
                 type="str",
             ),
             name=dict(
@@ -156,6 +154,12 @@ If you'd like to see the options available for you within the module, have a loo
                 choices=["absent", "present"],
                 type="str",
             ),
+            static=dict(
+                elements="str",
+                max_items=64,
+                required=False,
+                type="list",
+            ),
             tag=dict(
                 elements="str",
                 max_items=64,
@@ -163,4 +167,3 @@ If you'd like to see the options available for you within the module, have a loo
                 type="list",
             ),
         )
-

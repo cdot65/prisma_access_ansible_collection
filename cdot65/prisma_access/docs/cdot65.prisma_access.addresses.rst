@@ -9,7 +9,7 @@ Manage address objects
 addresses
 =========
 
-This module will allow you to manage your tag objects within Prisma Access.
+This module will allow you to manage your address objects within Prisma Access.
 
 Feature set as of version 0.1.1:
   - manage address objects

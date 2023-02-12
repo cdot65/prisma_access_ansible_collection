@@ -16,9 +16,6 @@ from ..module_utils.authenticate import (
 # Prisma Access SDK
 from panapi.config.network import IKEGateway
 
-# jwt is not a float and causes an error of the token not being valid yet, ugh
-import time
-
 __metaclass__ = type
 
 DOCUMENTATION = r"""
@@ -32,20 +29,11 @@ version_added: "0.1.3"
 description: Manage IKE Gateway objects within Prisma Access.
 
 options:
-    description:
+    authentication:
         description:
             - Description of the address object.
         required: false
         type: str
-    dynamic:
-        description:
-            - declare the address group object is dynamic
-        required: false
-        type: dict
-        options:
-            filter:
-                required: True
-                type: str
     folder:
         choices:
           - "Shared"
@@ -58,11 +46,11 @@ options:
             - declare where the object should reside.
         required: true
         type: str
-    name:
+    local_id:
         description:
             - Value of the address group object's name
-        required: true
-        type: str
+        required: false
+        type: dict
     state:
         description:
             - declare whether you want the resource to exist or be deleted

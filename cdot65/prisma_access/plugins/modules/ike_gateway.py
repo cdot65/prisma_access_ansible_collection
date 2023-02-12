@@ -144,6 +144,7 @@ def main():
     module = AnsibleModule(argument_spec=PrismaAccessSpec.ike_gateway_spec())
 
     try:
+        # create an authenticated session object
         auth = module.params.get("provider")
         session = PanApiSession()
         session.authenticate(
@@ -156,38 +157,32 @@ def main():
         # jwt isn't a float, causing an error of the token not being valid yet
         time.sleep(1)
 
-        gateway = IKEGateway(
-            description=module.params["description"],
-            folder=module.params["folder"],
-            name=module.params["name"],
-            state=module.params["state"],
-        )
+        ansible_params = {
+            "name": module.params["name"],
+            "folder": module.params["folder"],
+            "local_address": {"interface": "vlan"},
+            "peer_id": module.params["peer_id"],
+            "authentication": module.params["authentication"],
+            "peer_address": module.params["peer_address"],
+            "protocol_common": module.params["protocol_common"],
+            "protocol": module.params["protocol"],
+        }
 
-        if module.params["tag"]:
-            group.__setattr__("tag", module.params["tag"])
-
-        if module.params["static"]:
-            group.__setattr__("static", module.params["static"])
-        elif module.params["dynamic"]:
-            group.__setattr__("dynamic", module.params["dynamic"])
-        else:
-            module.fail_json(
-                msg="Must define either static or dynamic address group"
-            )
+        gateway = IKEGateway(**ansible_params)
 
         already_exists = False
-        existing_address_groups = group.list(session)
+        existing_address_groups = gateway.list(session)
 
         for each in existing_address_groups:
-            if group.name == each.name:
+            if gateway.name == each.name:
                 already_exists = True
-                group.id = each.id
+                gateway.id = each.id
 
         # raise Exception(already_exists)
 
         if module.params["state"] == "absent":
             if already_exists is True:
-                group.delete(session)
+                gateway.delete(session)
                 if session.response.status_code != 200:
                     module.fail_json(
                         msg=f"Did not receive proper response: {session.response.text}"
@@ -203,7 +198,7 @@ def main():
 
         else:
             if already_exists is False:
-                group.create(session)
+                gateway.create(session)
                 if session.response.status_code != 201:
                     module.fail_json(
                         msg=f"Did not receive proper response: {session.response.text}"
@@ -219,9 +214,7 @@ def main():
                 )
 
     except Exception as exception_error:
-        module.fail_json(
-            msg=to_native(exception_error), exception=format_exc()
-        )
+        module.fail_json(msg=to_native(exception_error), exception=format_exc())
 
 
 if __name__ == "__main__":

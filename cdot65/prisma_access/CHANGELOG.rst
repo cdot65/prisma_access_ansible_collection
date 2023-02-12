@@ -5,6 +5,23 @@ cdot65.prisma_access Release Notes
 .. contents:: Topics
 
 
+v0.1.4
+======
+
+Release Summary
+---------------
+
+Create module_util file to handle authentication, all modules refactored to take advantage.
+
+Renamed modules to be more consistent with other collections.
+
+
+New Modules
+-----------
+
+- cdot65.prisma_access.address - Renamed module, was previously `addresses`.
+- cdot65.prisma_access.address_group - Renamed module, was previously `address_groups`.
+
 v0.1.3
 ======
 

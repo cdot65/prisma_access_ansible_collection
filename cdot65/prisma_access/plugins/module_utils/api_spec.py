@@ -314,7 +314,7 @@ class PrismaAccessSpec:
                 ),
             ),
             peer_id=dict(
-                required=False,
+                required=True,
                 type="dict",
                 options=dict(
                     id=dict(

@@ -29,7 +29,7 @@ module: address groups
 
 short_description: Manage address group objects.
 
-version_added: "0.1.2"
+version_added: "0.1.3"
 
 description: Manage address group objects within Prisma Access.
 

@@ -1,0 +1,273 @@
+---
+# TEST
+- hosts: prisma
+  connection: local
+  gather_facts: False
+  become: False
+  collections:
+    - cdot65.prisma_access
+
+  tasks:
+    - name: Create IKE Gateway AnsibleIKE-1
+      cdot65.prisma_access.ike_gateway:
+        provider:
+          client_id: "{{ client_id }}"
+          client_secret: "{{ client_secret }}"
+          scope: "{{ scope }}"
+        name: "AnsibleIKE-1"
+        folder: "Service Connections"
+        peer_id:
+          id: "1.1.1.3"
+          type: "ipaddr"
+        authentication:
+          pre_shared_key:
+            key: "paloalto1!"
+        peer_address:
+          ip: "1.1.1.2"
+        protocol_common:
+          nat_traversal:
+            enable: True
+          fragmentation:
+            enable: False
+        protocol:
+          ikev1:
+            ike_crypto_profile: "PaloAlto-Networks-IKE-Crypto"
+            dpd:
+              enable: True
+          ikev2:
+            ike_crypto_profile: "PaloAlto-Networks-IKE-Crypto"
+            dpd:
+              enable: True
+          version: "ikev2-preferred"
+        state: "present"
+
+    - name: Create IKE Gateway AnsibleIKE-2
+      cdot65.prisma_access.ike_gateway:
+        provider:
+          client_id: "{{ client_id }}"
+          client_secret: "{{ client_secret }}"
+          scope: "{{ scope }}"
+        name: "AnsibleIKE-2"
+        folder: "Service Connections"
+        peer_id:
+          id: "vpn.redtail.com"
+          type: "fqdn"
+        authentication:
+          pre_shared_key:
+            key: "paloalto1!"
+        peer_address:
+          ip: "1.1.1.2"
+        protocol_common:
+          nat_traversal:
+            enable: True
+          fragmentation:
+            enable: False
+        protocol:
+          ikev1:
+            ike_crypto_profile: "PaloAlto-Networks-IKE-Crypto"
+            dpd:
+              enable: True
+          ikev2:
+            ike_crypto_profile: "PaloAlto-Networks-IKE-Crypto"
+            dpd:
+              enable: True
+          version: "ikev2-preferred"
+        state: "present"
+
+    - name: Create IKE Gateway AnsibleIKE-3
+      cdot65.prisma_access.ike_gateway:
+        provider:
+          client_id: "{{ client_id }}"
+          client_secret: "{{ client_secret }}"
+          scope: "{{ scope }}"
+        name: "AnsibleIKE-3"
+        folder: "Service Connections"
+        peer_id:
+          id: "calvin@vpn.redtail.com"
+          type: "ufqdn"
+        authentication:
+          pre_shared_key:
+            key: "paloalto1!"
+        peer_address:
+          ip: "1.1.1.2"
+        protocol_common:
+          nat_traversal:
+            enable: True
+          fragmentation:
+            enable: False
+        protocol:
+          ikev1:
+            ike_crypto_profile: "PaloAlto-Networks-IKE-Crypto"
+            dpd:
+              enable: True
+          ikev2:
+            ike_crypto_profile: "PaloAlto-Networks-IKE-Crypto"
+            dpd:
+              enable: True
+          version: "ikev2-preferred"
+        state: "present"
+
+    - name: Create IKE Gateway AnsibleIKE-4
+      cdot65.prisma_access.ike_gateway:
+        provider:
+          client_id: "{{ client_id }}"
+          client_secret: "{{ client_secret }}"
+          scope: "{{ scope }}"
+        name: "AnsibleIKE-4"
+        folder: "Service Connections"
+        peer_id:
+          id: "7B316"
+          type: "keyid"
+        authentication:
+          pre_shared_key:
+            key: "paloalto1!"
+        peer_address:
+          ip: "1.1.1.2"
+        protocol_common:
+          nat_traversal:
+            enable: True
+          fragmentation:
+            enable: False
+        protocol:
+          ikev1:
+            ike_crypto_profile: "PaloAlto-Networks-IKE-Crypto"
+            dpd:
+              enable: True
+          ikev2:
+            ike_crypto_profile: "PaloAlto-Networks-IKE-Crypto"
+            dpd:
+              enable: True
+          version: "ikev2-preferred"
+        state: "present"
+
+    - name: Delete IKE Gateway AnsibleIKE-1
+      cdot65.prisma_access.ike_gateway:
+        provider:
+          client_id: "{{ client_id }}"
+          client_secret: "{{ client_secret }}"
+          scope: "{{ scope }}"
+        name: "AnsibleIKE-1"
+        folder: "Service Connections"
+        peer_id:
+          id: "1.1.1.3"
+          type: "ipaddr"
+        authentication:
+          pre_shared_key:
+            key: "paloalto1!"
+        peer_address:
+          dynamic:
+        protocol_common:
+          nat_traversal:
+            enable: True
+          fragmentation:
+            enable: False
+        protocol:
+          ikev1:
+            ike_crypto_profile: "PaloAlto-Networks-IKE-Crypto"
+            dpd:
+              enable: True
+          ikev2:
+            ike_crypto_profile: "PaloAlto-Networks-IKE-Crypto"
+            dpd:
+              enable: True
+          version: "ikev2-preferred"
+        state: "absent"
+
+    - name: Delete IKE Gateway AnsibleIKE-2
+      cdot65.prisma_access.ike_gateway:
+        provider:
+          client_id: "{{ client_id }}"
+          client_secret: "{{ client_secret }}"
+          scope: "{{ scope }}"
+        name: "AnsibleIKE-2"
+        folder: "Service Connections"
+        peer_id:
+          id: "1.1.1.3"
+          type: "ipaddr"
+        authentication:
+          pre_shared_key:
+            key: "paloalto1!"
+        peer_address:
+          dynamic:
+        protocol_common:
+          nat_traversal:
+            enable: True
+          fragmentation:
+            enable: False
+        protocol:
+          ikev1:
+            ike_crypto_profile: "PaloAlto-Networks-IKE-Crypto"
+            dpd:
+              enable: True
+          ikev2:
+            ike_crypto_profile: "PaloAlto-Networks-IKE-Crypto"
+            dpd:
+              enable: True
+          version: "ikev2-preferred"
+        state: "absent"
+
+    - name: Delete IKE Gateway AnsibleIKE-3
+      cdot65.prisma_access.ike_gateway:
+        provider:
+          client_id: "{{ client_id }}"
+          client_secret: "{{ client_secret }}"
+          scope: "{{ scope }}"
+        name: "AnsibleIKE-3"
+        folder: "Service Connections"
+        peer_id:
+          id: "1.1.1.3"
+          type: "ipaddr"
+        authentication:
+          pre_shared_key:
+            key: "paloalto1!"
+        peer_address:
+          dynamic:
+        protocol_common:
+          nat_traversal:
+            enable: True
+          fragmentation:
+            enable: False
+        protocol:
+          ikev1:
+            ike_crypto_profile: "PaloAlto-Networks-IKE-Crypto"
+            dpd:
+              enable: True
+          ikev2:
+            ike_crypto_profile: "PaloAlto-Networks-IKE-Crypto"
+            dpd:
+              enable: True
+          version: "ikev2-preferred"
+        state: "absent"
+
+    - name: Delete IKE Gateway AnsibleIKE-4
+      cdot65.prisma_access.ike_gateway:
+        provider:
+          client_id: "{{ client_id }}"
+          client_secret: "{{ client_secret }}"
+          scope: "{{ scope }}"
+        name: "AnsibleIKE-4"
+        folder: "Service Connections"
+        peer_id:
+          id: "1.1.1.3"
+          type: "ipaddr"
+        authentication:
+          pre_shared_key:
+            key: "paloalto1!"
+        peer_address:
+          dynamic:
+        protocol_common:
+          nat_traversal:
+            enable: True
+          fragmentation:
+            enable: False
+        protocol:
+          ikev1:
+            ike_crypto_profile: "PaloAlto-Networks-IKE-Crypto"
+            dpd:
+              enable: True
+          ikev2:
+            ike_crypto_profile: "PaloAlto-Networks-IKE-Crypto"
+            dpd:
+              enable: True
+          version: "ikev2-preferred"
+        state: "absent"

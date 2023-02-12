@@ -9,7 +9,7 @@
 
   tasks:
     - name: Create ip-netmask address objects
-      cdot65.prisma_access.addresses:
+      cdot65.prisma_access.address:
         provider:
           client_id: "{{ client_id }}"
           client_secret: "{{ client_secret }}"
@@ -22,7 +22,7 @@
         tag: "Ansible"
 
     - name: Create address group
-      cdot65.prisma_access.address_groups:
+      cdot65.prisma_access.address_group:
         provider:
           client_id: "{{ client_id }}"
           client_secret: "{{ client_secret }}"
@@ -37,7 +37,7 @@
           - "Ansible"
 
     - name: Create address group
-      cdot65.prisma_access.address_groups:
+      cdot65.prisma_access.address_group:
         provider:
           client_id: "{{ client_id }}"
           client_secret: "{{ client_secret }}"
@@ -52,7 +52,7 @@
           - "Ansible"
 
     - name: Remove address group
-      cdot65.prisma_access.address_groups:
+      cdot65.prisma_access.address_group:
         provider:
           client_id: "{{ client_id }}"
           client_secret: "{{ client_secret }}"
@@ -65,7 +65,7 @@
         state: "absent"
 
     - name: Remove address group
-      cdot65.prisma_access.address_groups:
+      cdot65.prisma_access.address_group:
         provider:
           client_id: "{{ client_id }}"
           client_secret: "{{ client_secret }}"
@@ -78,7 +78,7 @@
         state: "absent"
 
     - name: Remove ip-netmask address objects
-      cdot65.prisma_access.addresses:
+      cdot65.prisma_access.address:
         provider:
           client_id: "{{ client_id }}"
           client_secret: "{{ client_secret }}"

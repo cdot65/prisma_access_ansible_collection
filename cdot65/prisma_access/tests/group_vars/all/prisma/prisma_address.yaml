@@ -1,5 +1,5 @@
 ---
-prisma_netmask_addresses:
+prisma_netmask_address:
   - ip_netmask: "100.10.254.0/24"
     name: "Ansible Test 1"
     description: "This is a test of netmask address objects"
@@ -13,7 +13,7 @@ prisma_netmask_addresses:
     tag:
       - "Automation"
 
-prisma_range_addresses:
+prisma_range_address:
   - ip_range: "100.10.254.10-100.10.254.99"
     name: "Ansible Test 3"
     description: "This is a test of range address objects"
@@ -27,7 +27,7 @@ prisma_range_addresses:
     tag:
       - "Automation"
 
-prisma_fqdn_addresses:
+prisma_fqdn_address:
   - fqdn: "redtail.com"
     name: "Ansible Test 5"
     description: "This is a test of fqdn address objects"
@@ -41,7 +41,7 @@ prisma_fqdn_addresses:
     tag:
       - "Automation"
 
-prisma_wildcard_addresses:
+prisma_wildcard_address:
   - ip_wildcard: "100.0.0.0/0.0.248.255"
     name: "Ansible Test 7"
     description: "This is a test of wildcard address objects"

@@ -20,7 +20,7 @@ __metaclass__ = type
 
 DOCUMENTATION = r"""
 ---
-module: addresses
+module: address
 
 short_description: Manage address objects.
 
@@ -81,16 +81,13 @@ options:
         type: str
 
 
-extends_documentation_fragment:
-    - cdot65.prisma_access.addresses
-
 author:
     - Calvin Remsburg (@cdot65)
 """
 
 EXAMPLES = r"""
     - name: Create ip-netmask address objects
-      cdot65.prisma_access.addresses:
+      cdot65.prisma_access.address:
         provider:
           client_id: "{{ client_id }}"
           client_secret: "{{ client_secret }}"
@@ -103,7 +100,7 @@ EXAMPLES = r"""
         tag: "Automation"
 
     - name: Create ip-range address objects
-      cdot65.prisma_access.addresses:
+      cdot65.prisma_access.address:
         provider:
           client_id: "{{ client_id }}"
           client_secret: "{{ client_secret }}"
@@ -116,7 +113,7 @@ EXAMPLES = r"""
         tag: "Automation"
 
     - name: Create fqdn address objects
-      cdot65.prisma_access.addresses:
+      cdot65.prisma_access.address:
         provider:
           client_id: "{{ client_id }}"
           client_secret: "{{ client_secret }}"
@@ -129,7 +126,7 @@ EXAMPLES = r"""
         tag: "Automation"
 
     - name: Create wildcard address objects
-      cdot65.prisma_access.addresses:
+      cdot65.prisma_access.address:
         provider:
           client_id: "{{ client_id }}"
           client_secret: "{{ client_secret }}"
@@ -154,7 +151,7 @@ def main():
 
     Raises an exception if an error occurs during the module's execution.
     """
-    module = AnsibleModule(argument_spec=PrismaAccessSpec.addresses_spec())
+    module = AnsibleModule(argument_spec=PrismaAccessSpec.address_spec())
 
     # -------------------------------------------------------------------------------------------------------------- #
     # 1. Authenticate the session object using the client_id, client_secret, scope, and token_url parameters passed
@@ -205,9 +202,9 @@ def main():
 
         # Check if an Address with the same name already exists
         already_exists = False
-        existing_addresses = address.list(session)
+        existing_address = address.list(session)
 
-        for each in existing_addresses:
+        for each in existing_address:
             if address.name == each.name:
                 already_exists = True
                 address.id = each.id

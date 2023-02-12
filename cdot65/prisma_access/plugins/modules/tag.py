@@ -64,9 +64,6 @@ options:
           - 'present'
         type: str
 
-extends_documentation_fragment:
-    - cdot65.prisma_access.tag
-
 author:
     - Calvin Remsburg (@cdot65)
 """

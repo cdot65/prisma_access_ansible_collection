@@ -1,5 +1,18 @@
 ancestor: null
 releases:
+  0.1.4:
+    changes:
+      release_summary: "Adds authenticate module utility, renames modules."
+    fragments:
+      - release-v0.1.3.yml
+    modules:
+      - description: Renamed module, previously `addresses`
+        name: address
+        namespace: ""
+      - description: Renamed module, previously `address_groups`
+        name: address_group
+        namespace: ""
+    release_date: "2023-02-12"
   0.1.3:
     changes:
       release_summary: "Adds support for IKE Gateway objects."
@@ -7,7 +20,7 @@ releases:
       - release-v0.1.3.yml
     modules:
       - description: Creates or removes IKE Gateway objects from Prisma Access
-        name: addresses
+        name: ike_gateway
         namespace: ""
     release_date: "2023-02-12"
   0.1.2:
@@ -17,7 +30,7 @@ releases:
       - release-v0.1.2.yml
     modules:
       - description: Creates or removes address group objects from Prisma Access
-        name: addresses
+        name: address_groups
         namespace: ""
     release_date: "2023-02-09"
   0.1.1:

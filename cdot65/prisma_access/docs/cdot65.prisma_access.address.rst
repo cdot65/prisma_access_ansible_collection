@@ -1,12 +1,12 @@
 ==============================
-cdot65.prisma_access.addresses
+cdot65.prisma_access.address
 ==============================
 
 ----------------------
 Manage address objects
 ----------------------
 
-addresses
+address
 =========
 
 This module will allow you to manage your address objects within Prisma Access.
@@ -35,7 +35,7 @@ Here is a basic example of using the module to mange your address objects in Pri
 
       tasks:
         - name: Create ip-netmask address objects
-          cdot65.prisma_access.addresses:
+          cdot65.prisma_access.address:
             provider:
               client_id: "{{ client_id }}"
               client_secret: "{{ client_secret }}"
@@ -48,7 +48,7 @@ Here is a basic example of using the module to mange your address objects in Pri
             tag: "Automation"
         
         - name: Create ip-range address objects
-          cdot65.prisma_access.addresses:
+          cdot65.prisma_access.address:
             provider:
               client_id: "{{ client_id }}"
               client_secret: "{{ client_secret }}"
@@ -61,7 +61,7 @@ Here is a basic example of using the module to mange your address objects in Pri
             tag: "Automation"
 
         - name: Create fqdn address objects
-          cdot65.prisma_access.addresses:
+          cdot65.prisma_access.address:
             provider:
               client_id: "{{ client_id }}"
               client_secret: "{{ client_secret }}"
@@ -74,7 +74,7 @@ Here is a basic example of using the module to mange your address objects in Pri
             tag: "Automation"
         
         - name: Create wildcard address objects
-          cdot65.prisma_access.addresses:
+          cdot65.prisma_access.address:
             provider:
               client_id: "{{ client_id }}"
               client_secret: "{{ client_secret }}"
@@ -93,7 +93,7 @@ If you'd like to see the options available for you within the module, have a loo
 
 .. code-block:: python
 
-    def addresses_spec():
+    def address_spec():
         """Return the address object spec."""
         return dict(
             description=dict(

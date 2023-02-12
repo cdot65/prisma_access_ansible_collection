@@ -4,22 +4,17 @@ Copyright: (c) 2023, Calvin Remsburg (@cdot65) <cremsburg.dev@gmail.com>
 """
 from __future__ import absolute_import, division, print_function
 from traceback import format_exc
-from ansible.module_utils.basic import (
-    AnsibleModule,
-)
-from ansible.module_utils._text import (
-    to_native,
-)
-from ansible_collections.cdot65.prisma_access.plugins.module_utils.api_spec import (
+from ansible.module_utils.basic import AnsibleModule
+from ansible.module_utils._text import to_native
+from ..module_utils.api_spec import (
     PrismaAccessSpec,
+)
+from ..module_utils.authenticate import (
+    get_authenticated_session,
 )
 
 # Prisma Access SDK
-from panapi import PanApiSession
 from panapi.config.objects import Address
-
-# jwt is not a float and causes an error of the token not being valid yet, ugh
-import time
 
 __metaclass__ = type
 
@@ -149,63 +144,66 @@ EXAMPLES = r"""
 
 
 def main():
-    """
-    The main function is the entry point for the script.
-    It performs actions to create or delete an address based on the state parameter.
+    """This is the main function that contains the logic for creating, modifying,
+        and deleting an Address Object on the Prisma Access platform.
 
-    Summary of the main function:
-      - sets up the required parameters
-      - creates the necessary objects
-      - performs actions on the objects.
+    It takes no arguments and returns no values.
 
-    If the `state` parameter is set to "absent": the function will delete the address (if it exists).
+    It uses the AnsibleModule class to get the module's argument specification
+        and process the results of the module's actions.
 
-    If the `state` parameter is set to anything else: the function will create the address (if it does not exist).
-
-    If the address already exists or is successfully deleted, the function will exit with a changed value of False.
-
-    If the address is successfully created or deleted, the function will exit with a changed value of True.
-
-    The function may raise an Exception and will fail if an error occurs.
+    Raises an exception if an error occurs during the module's execution.
     """
     module = AnsibleModule(argument_spec=PrismaAccessSpec.addresses_spec())
 
+    # -------------------------------------------------------------------------------------------------------------- #
+    # 1. Authenticate the session object using the client_id, client_secret, scope, and token_url parameters passed
+    #    through the Ansible module.
+    # -------------------------------------------------------------------------------------------------------------- #
     try:
-        auth = module.params.get("provider")
-        session = PanApiSession()
-        session.authenticate(
-            client_id=auth["client_id"],
-            client_secret=auth["client_secret"],
-            scope=f'profile tsg_id:{auth["scope"]} email',
-            token_url="https://auth.apps.paloaltonetworks.com/am/oauth2/access_token",
+        # get the provider parameter from the Ansible module, which includes the authentication credentials
+        session = get_authenticated_session(module)
+
+    except Exception as exception_error:
+        # if an exception occurs during the authentication process, fail the module and return an error message
+        module.fail_json(msg=to_native(exception_error), exception=format_exc())
+
+    # -------------------------------------------------------------------------------------------------------------- #
+    # 2. Create a dictionary representing the configuration settings for an Address.                                 #
+    # -------------------------------------------------------------------------------------------------------------- #
+    address = {
+        "description": module.params["description"],
+        "folder": module.params["folder"],
+        "name": module.params["name"],
+    }
+
+    # -------------------------------------------------------------------------------------------------------------- #
+    # 3. Update the address configuration dictionary based on key/value pairs passed in Ansible module.              #
+    # -------------------------------------------------------------------------------------------------------------- #
+    if module.params["tag"]:
+        address["tag"] = module.params["tag"]
+
+    if module.params["fqdn"]:
+        address["fqdn"] = module.params["fqdn"]
+    elif module.params["ip_netmask"]:
+        address["ip_netmask"] = module.params["ip_netmask"]
+    elif module.params["ip_range"]:
+        address["ip_range"] = module.params["ip_range"]
+    elif module.params["ip_wildcard"]:
+        address["ip_wildcard"] = module.params["ip_wildcard"]
+    else:
+        module.fail_json(
+            msg="Must define ip_netmask, ip_range, ip_wildcard, or fqdn"
         )
 
-        # jwt isn't a float, causing an error of the token not being valid yet
-        time.sleep(1)
+    # -------------------------------------------------------------------------------------------------------------- #
+    # 4. create an instance of the "Address" class using the address dictionary.                                     #
+    # -------------------------------------------------------------------------------------------------------------- #
+    try:
+        # Create an Address object with the address dictionary
+        address = Address(**address)
 
-        address = Address(
-            description=module.params["description"],
-            folder=module.params["folder"],
-            name=module.params["name"],
-            state=module.params["state"],
-        )
-
-        if module.params["fqdn"]:
-            address.__setattr__("fqdn", module.params["fqdn"])
-            address.__setattr__("tag", module.params["tag"])
-        elif module.params["ip_netmask"]:
-            address.__setattr__("ip_netmask", module.params["ip_netmask"])
-            address.__setattr__("tag", module.params["tag"])
-        elif module.params["ip_range"]:
-            address.__setattr__("ip_range", module.params["ip_range"])
-            address.__setattr__("tag", module.params["tag"])
-        elif module.params["ip_wildcard"]:
-            address.__setattr__("ip_wildcard", module.params["ip_wildcard"])
-        else:
-            module.fail_json(
-                msg="Must define ip_netmask, ip_range, ip_wildcard, or fqdn"
-            )
-
+        # Check if an Address with the same name already exists
         already_exists = False
         existing_addresses = address.list(session)
 
@@ -214,40 +212,48 @@ def main():
                 already_exists = True
                 address.id = each.id
 
+        # Check the state parameter to see if the Address should be created or deleted
         if module.params["state"] == "absent":
             if already_exists is True:
+                # Delete the Address if it exists
                 address.delete(session)
                 if session.response.status_code != 200:
                     module.fail_json(
                         msg=f"Did not receive proper response: {session.response.text}"
                     )
+                # Exit the module with a success message
                 module.exit_json(
                     changed=True,
                     data=session.response.json(),
                 )
             else:
+                # Exit the module with a message saying the Address doesn't exist
                 module.exit_json(
-                    changed=False, data="Tag does not exist, exiting"
+                    changed=False, data="Address does not exist, exiting"
                 )
 
         else:
             if already_exists is False:
+                # Create the Address if it doesn't exist
                 address.create(session)
                 if session.response.status_code != 201:
                     module.fail_json(
                         msg=f"Did not receive proper response: {session.response.text}"
                     )
+                # Exit the module with a success message
                 module.exit_json(
                     changed=True,
                     data=session.response.json(),
                 )
             else:
+                # Exit the module with a message saying the Address already exists
                 module.exit_json(
                     changed=False,
                     data=session.response.json(),
                 )
 
     except Exception as exception_error:
+        # If an exception occurs, fail the module and return an error message
         module.fail_json(msg=to_native(exception_error), exception=format_exc())
 
 

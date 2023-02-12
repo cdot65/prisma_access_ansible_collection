@@ -1,12 +1,28 @@
 ancestor: null
 releases:
+  0.1.3:
+    changes:
+      release_summary: "Adds several components to create Service Connection."
+    fragments:
+      - release-v0.1.3.yml
+    modules:
+      - description: Creates or removes IKE gateway objects for Prisma Access
+        name: ike_gateway
+        namespace: ""
+      - description: Creates or removes IPsec Tunnel objects for Prisma Access
+        name: ipsec_tunnel
+        namespace: ""
+      - description: Creates or removes Service connections for Prisma Access
+        name: service_connection
+        namespace: ""
+    release_date: "2023-02-09"
   0.1.2:
     changes:
       release_summary: "Adds support for address group objects."
     fragments:
       - release-v0.1.2.yml
     modules:
-      - description: Creates or removes address group objects from Prisma Access
+      - description: Creates or removes address group objects for Prisma Access
         name: addresses
         namespace: ""
     release_date: "2023-02-09"
@@ -16,7 +32,7 @@ releases:
     fragments:
       - release-v0.1.1.yml
     modules:
-      - description: Creates or removes address objects from Prisma Access
+      - description: Creates or removes address objects for Prisma Access
         name: addresses
         namespace: ""
     release_date: "2023-02-09"
@@ -26,7 +42,7 @@ releases:
     fragments:
       - release-v0.1.0.yml
     modules:
-      - description: Creates or removes tag objects from Prisma Access
+      - description: Creates or removes tag objects for Prisma Access
         name: tag
         namespace: ""
     release_date: "2023-01-29"

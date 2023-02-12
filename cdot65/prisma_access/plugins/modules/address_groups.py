@@ -75,9 +75,6 @@ options:
         type: list
 
 
-extends_documentation_fragment:
-    - cdot65.prisma_access.address_groups
-
 author:
     - Calvin Remsburg (@cdot65)
 """

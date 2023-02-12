@@ -32,7 +32,7 @@ parity with the API spec before this project hits version 1.0.0
 | Name                                | Description                                |
 | ----------------------------------- | ------------------------------------------ |
 | cdot65.prisma_access.tag            | Manage Prisma Access tag objects           |
-| cdot65.prisma_access.addresses      | Manage Prisma Access address objects       |
+| cdot65.prisma_access.address        | Manage Prisma Access address objects       |
 | cdot65.prisma_access.address_groups | Manage Prisma Access address group objects |
 
 🚀 Executing the playbook

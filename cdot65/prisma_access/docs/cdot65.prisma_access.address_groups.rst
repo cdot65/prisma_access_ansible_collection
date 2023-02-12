@@ -47,7 +47,7 @@ Here is a basic example of using the module to mange your address objects in Pri
             state: "present"
 
         - name: Create ip-netmask address objects
-          cdot65.prisma_access.addresses:
+          cdot65.prisma_access.address:
             provider:
               client_id: "{{ client_id }}"
               client_secret: "{{ client_secret }}"

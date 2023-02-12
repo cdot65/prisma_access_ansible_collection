@@ -66,9 +66,6 @@ options:
         type: list
 
 
-extends_documentation_fragment:
-    - cdot65.prisma_access.ike_gateway
-
 author:
     - Calvin Remsburg (@cdot65)
 """

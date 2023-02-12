@@ -68,7 +68,7 @@ class PrismaAccessSpec:
         )
 
     @staticmethod
-    def addresses_spec():
+    def address_spec():
         """Return the address object spec."""
         return dict(
             description=dict(

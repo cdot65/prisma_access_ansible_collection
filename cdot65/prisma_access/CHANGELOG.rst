@@ -45,7 +45,7 @@ This corrects authentication and adds support for address objects.
 New Modules
 -----------
 
-- cdot65.prisma_access.addresses - Creates or removes address objects within Prisma Access.
+- cdot65.prisma_access.address - Creates or removes address objects within Prisma Access.
 
 v0.1.0
 ======

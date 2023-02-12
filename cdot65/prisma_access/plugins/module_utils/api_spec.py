@@ -221,13 +221,7 @@ class PrismaAccessSpec:
                 options=dict(
                     pre_shared_key=dict(
                         required=False,
-                        type="dict",
-                        options=dict(
-                            key=dict(
-                                required=True,
-                                type="str",
-                            )
-                        ),
+                        type="str",
                     ),
                     certificate=dict(
                         required=False,
@@ -309,7 +303,7 @@ class PrismaAccessSpec:
                     ),
                     dynamic=dict(
                         required=False,
-                        type="str",
+                        type="bool",
                     ),
                 ),
             ),

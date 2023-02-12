@@ -11,7 +11,7 @@ from ansible.module_utils._text import (
     to_native,
 )
 from ansible_collections.cdot65.prisma_access.plugins.module_utils.api_spec import (
-    PrismaAccessApiSpec,
+    PrismaAccessSpec,
 )
 
 # Prisma Access SDK
@@ -141,7 +141,7 @@ def main():
 
     The function may raise an Exception and will fail if an error occurs.
     """
-    module = AnsibleModule(argument_spec=PrismaAccessApiSpec.ike_gateway_spec())
+    module = AnsibleModule(argument_spec=PrismaAccessSpec.ike_gateway_spec())
 
     try:
         # create an authenticated session object
@@ -157,23 +157,74 @@ def main():
         # jwt isn't a float, causing an error of the token not being valid yet
         time.sleep(1)
 
-        ansible_params = {
+        ike_gateway = {
             "name": module.params["name"],
             "folder": module.params["folder"],
             "local_address": {"interface": "vlan"},
+            "authentication": {},
             "peer_id": module.params["peer_id"],
-            "authentication": module.params["authentication"],
-            "peer_address": module.params["peer_address"],
-            "protocol_common": module.params["protocol_common"],
-            "protocol": module.params["protocol"],
+            "peer_address": {},
+            "protocol_common": {},
+            "protocol": {
+                "ikev1": {
+                    "ike_crypto_profile": "PaloAlto-Networks-IKE-Crypto",
+                    "dpd": {"enable": True},
+                },
+                "ikev2": {
+                    "ike_crypto_profile": "PaloAlto-Networks-IKE-Crypto",
+                    "dpd": {"enable": True},
+                },
+                "version": "ikev2-preferred",
+            },
         }
 
-        gateway = IKEGateway(**ansible_params)
+        # update parameters with the selected authentication schema
+        authentication = module.params["authentication"]
+        if authentication["pre_shared_key"]:
+            ike_gateway["authentication"]["pre_shared_key"] = {
+                "key": authentication["pre_shared_key"]
+            }
+        elif authentication["certificate"]:
+            ike_gateway["authentication"]["certificate"] = authentication[
+                "certificate"
+            ]
+        else:
+            module.fail_json(msg="Authentication method not specified")
+
+        # update parameters with the selected peer_address
+        peer_address = module.params["peer_address"]
+        if peer_address["ip"]:
+            ike_gateway["peer_address"]["ip"] = peer_address["ip"]
+        elif peer_address["fqdn"] or peer_address["dynamic"]:
+            ike_gateway["peer_address"]["dynamic"] = {}
+        else:
+            module.fail_json(msg="Peer address not specified")
+
+        # override defaults for protocol_common
+        if module.params["protocol_common"]:
+            common = module.params["protocol_common"]
+            if common["nat_traversal"]:
+                ike_gateway["protocol_common"]["nat_traversal"] = {
+                    "enable": common["nat_traversal"]["enable"]
+                }
+            if common["fragmentation"]:
+                ike_gateway["protocol_common"]["fragmentation"] = {
+                    "enable": common["fragmentation"]["enable"]
+                }
+        else:
+            ike_gateway["protocol_common"] = {
+                "nat_traversal": {"enable": True},
+                "fragmentation": {"enable": False},
+            }
+
+        # raise Exception(ike_gateway)
+
+        gateway = IKEGateway(**ike_gateway)
 
         already_exists = False
-        existing_address_groups = gateway.list(session)
+        existing_ike_gateway = gateway.list(session)
 
-        for each in existing_address_groups:
+        for each in existing_ike_gateway:
             if gateway.name == each.name:
                 already_exists = True
                 gateway.id = each.id

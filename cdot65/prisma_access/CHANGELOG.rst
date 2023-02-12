@@ -5,6 +5,20 @@ cdot65.prisma_access Release Notes
 .. contents:: Topics
 
 
+v0.1.3
+======
+
+Release Summary
+---------------
+
+Adds support for IKE Gateway objects.
+
+
+New Modules
+-----------
+
+- cdot65.prisma_access.ike_gateway - Creates or removes IKE Gateway objects within Prisma Access.
+
 v0.1.2
 ======
 

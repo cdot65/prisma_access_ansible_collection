@@ -19,7 +19,7 @@
         ip_netmask: "192.168.77.0/24"
         name: "AnsibleTestAddress"
         state: "present"
-        tag: "ansible-test"
+        tag: "Ansible"
 
     - name: Create address group
       cdot65.prisma_access.address_groups:
@@ -34,7 +34,7 @@
         folder: "Service Connections"
         state: "present"
         tag:
-          - "ansible-test"
+          - "Ansible"
 
     - name: Create address group
       cdot65.prisma_access.address_groups:
@@ -49,7 +49,7 @@
         folder: "Service Connections"
         state: "present"
         tag:
-          - "ansible-test"
+          - "Ansible"
 
     - name: Remove address group
       cdot65.prisma_access.address_groups:
@@ -88,4 +88,4 @@
         ip_netmask: "192.168.77.0/24"
         name: "AnsibleTestAddress"
         state: "absent"
-        tag: "ansible-test"
+        tag: "Ansible"

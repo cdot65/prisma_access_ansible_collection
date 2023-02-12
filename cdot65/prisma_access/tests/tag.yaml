@@ -20,3 +20,16 @@
         folder: "Service Connections"
         state: "present"
       loop: "{{ prisma_tags }}"
+
+    - name: Create tags
+      cdot65.prisma_access.tag:
+        provider:
+          client_id: "{{ client_id }}"
+          client_secret: "{{ client_secret }}"
+          scope: "{{ scope }}"
+        name: "{{ item.name }}"
+        color: "{{ item.color }}"
+        comments: "{{ item.comments }}"
+        folder: "Service Connections"
+        state: "absent"
+      loop: "{{ prisma_tags }}"

@@ -29,11 +29,12 @@ but it is something to keep in mind.
 Here is a short list of modules included within the collection, expect feature
 parity with the API spec before this project hits version 1.0.0
 
-| Name                               | Description                                |
-| ---------------------------------- | ------------------------------------------ |
-| cdot65.prisma_access.tag           | Manage Prisma Access tag objects           |
-| cdot65.prisma_access.address       | Manage Prisma Access address objects       |
-| cdot65.prisma_access.address_group | Manage Prisma Access address group objects |
+| Name                               | Description               |
+| ---------------------------------- | ------------------------- |
+| cdot65.prisma_access.address       | Manage addresses          |
+| cdot65.prisma_access.address_group | Manage address groups     |
+| cdot65.prisma_access.ike_gateway   | Manage IPsec IKE Gateways |
+| cdot65.prisma_access.tag           | Manage tags               |
 
 🚀 Executing the playbook
 After installing the collections, you can call the modules by using their full name path.

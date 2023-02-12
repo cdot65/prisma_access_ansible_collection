@@ -81,7 +81,7 @@ author:
 
 EXAMPLES = r"""
     - name: Create address group
-      cdot65.prisma_access.address_groups:
+      cdot65.prisma_access.address_group:
         provider:
           client_id: "{{ client_id }}"
           client_secret: "{{ client_secret }}"
@@ -96,7 +96,7 @@ EXAMPLES = r"""
         state: "present"
 
     - name: Create address group
-      cdot65.prisma_access.address_groups:
+      cdot65.prisma_access.address_group:
         provider:
           client_id: "{{ client_id }}"
           client_secret: "{{ client_secret }}"
@@ -124,7 +124,7 @@ def main():
 
     Raises an exception if an error occurs during the module's execution.
     """
-    module = AnsibleModule(argument_spec=PrismaAccessSpec.address_groups_spec())
+    module = AnsibleModule(argument_spec=PrismaAccessSpec.address_group_spec())
 
     # -------------------------------------------------------------------------------------------------------------- #
     # 1. Authenticate the session object using the client_id, client_secret, scope, and token_url parameters passed
@@ -171,9 +171,9 @@ def main():
 
         # Check if an AddressGroup with the same name already exists
         already_exists = False
-        existing_address_groups = group.list(session)
+        existing_address_group = group.list(session)
 
-        for each in existing_address_groups:
+        for each in existing_address_group:
             if group.name == each.name:
                 already_exists = True
                 group.id = each.id

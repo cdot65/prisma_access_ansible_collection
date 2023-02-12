@@ -1,12 +1,12 @@
 ===================================
-cdot65.prisma_access.address_groups
+cdot65.prisma_access.address_group
 ===================================
 
 ----------------------------
 Manage address group objects
 ----------------------------
 
-address_groups
+address_group
 ==============
 
 This module will allow you to manage your address group objects within Prisma Access.
@@ -60,7 +60,7 @@ Here is a basic example of using the module to mange your address objects in Pri
             tag: "ansible-test"
 
         - name: Create address group
-          cdot65.prisma_access.address_groups:
+          cdot65.prisma_access.address_group:
             provider:
               client_id: "{{ client_id }}"
               client_secret: "{{ client_secret }}"
@@ -75,7 +75,7 @@ Here is a basic example of using the module to mange your address objects in Pri
             state: "present"
 
         - name: Create address group
-          cdot65.prisma_access.address_groups:
+          cdot65.prisma_access.address_group:
             provider:
               client_id: "{{ client_id }}"
               client_secret: "{{ client_secret }}"
@@ -97,7 +97,7 @@ If you'd like to see the options available for you within the module, have a loo
 
 .. code-block:: python
 
-    def address_groups_spec():
+    def address_group_spec():
         """Return the address groups object spec."""
         return dict(
             description=dict(

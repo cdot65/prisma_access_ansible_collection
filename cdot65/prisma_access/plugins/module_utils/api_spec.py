@@ -140,7 +140,7 @@ class PrismaAccessSpec:
         )
 
     @staticmethod
-    def address_groups_spec():
+    def address_group_spec():
         """Return the address groups object spec."""
         return dict(
             description=dict(

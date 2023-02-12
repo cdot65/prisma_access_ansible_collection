@@ -20,7 +20,7 @@ New Modules
 -----------
 
 - cdot65.prisma_access.address - Renamed module, was previously `addresses`.
-- cdot65.prisma_access.address_group - Renamed module, was previously `address_groups`.
+- cdot65.prisma_access.address_group - Renamed module, was previously `address_group`.
 
 v0.1.3
 ======
@@ -48,7 +48,7 @@ Adds support for address group objects.
 New Modules
 -----------
 
-- cdot65.prisma_access.address_groups - Creates or removes address group objects within Prisma Access.
+- cdot65.prisma_access.address_group - Creates or removes address group objects within Prisma Access.
 
 v0.1.1
 ======
@@ -62,7 +62,7 @@ This corrects authentication and adds support for address objects.
 New Modules
 -----------
 
-- cdot65.prisma_access.address - Creates or removes address objects within Prisma Access.
+- cdot65.prisma_access.addresses - Creates or removes address objects within Prisma Access.
 
 v0.1.0
 ======

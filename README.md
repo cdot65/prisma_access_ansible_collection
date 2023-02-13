@@ -34,6 +34,7 @@ parity with the API spec before this project hits version 1.0.0
 | cdot65.prisma_access.address       | Manage addresses          |
 | cdot65.prisma_access.address_group | Manage address groups     |
 | cdot65.prisma_access.ike_gateway   | Manage IPsec IKE Gateways |
+| cdot65.prisma_access.ipsec_tunnel  | Manage IPsec Tunnels      |
 | cdot65.prisma_access.tag           | Manage tags               |
 
 🚀 Executing the playbook

@@ -437,3 +437,95 @@ class PrismaAccessSpec:
                 type="str",
             ),
         )
+
+    @staticmethod
+    def ipsec_tunnel_spec():
+        """Return the IPsec Tunnel object spec."""
+        return dict(
+            anti_replay=dict(
+                required=False,
+                type="bool",
+                default=False,
+            ),
+            auto_key=dict(
+                required=True,
+                type="dict",
+                options=dict(
+                    ike_gateway=dict(
+                        required=True,
+                        type="list",
+                        elements="dict",
+                        options=dict(
+                            name=dict(
+                                required=True,
+                                type="str",
+                            ),
+                        ),
+                    ),
+                    ipsec_crypto_profile=dict(
+                        required=True,
+                        type="str",
+                    ),
+                ),
+            ),
+            folder=dict(
+                required=True,
+                choices=[
+                    "Mobile Users",
+                    "Mobile Users Container",
+                    "Mobile Users Explicit Proxy",
+                    "Remote Networks",
+                    "Service Connections",
+                    "Shared",
+                ],
+                type="str",
+            ),
+            name=dict(
+                max_length=63,
+                required=True,
+                type="str",
+            ),
+            provider=dict(
+                required=True,
+                type="dict",
+                options=dict(
+                    client_id=dict(
+                        required=True,
+                        type="str",
+                    ),
+                    client_secret=dict(
+                        required=True,
+                        type="str",
+                    ),
+                    scope=dict(
+                        required=True,
+                        type="str",
+                    ),
+                ),
+            ),
+            state=dict(
+                required=True,
+                choices=["absent", "present"],
+                type="str",
+            ),
+            tunnel_interface=dict(
+                required=False,
+                type="str",
+                default="tunnel",
+            ),
+            tunnel_monitor=dict(
+                required=True,
+                type="dict",
+                options=dict(
+                    enable=dict(
+                        required=False,
+                        type="bool",
+                        default=False,
+                    ),
+                    destination_ip=dict(
+                        required=False,
+                        type="str",
+                    ),
+                ),
+            ),
+        )

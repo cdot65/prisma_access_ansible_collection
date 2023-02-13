@@ -5,6 +5,20 @@ cdot65.prisma_access Release Notes
 .. contents:: Topics
 
 
+v0.1.5
+======
+
+Release Summary
+---------------
+
+Manage IPsec Tunnel objects
+
+
+New Modules
+-----------
+
+- cdot65.prisma_access.ipsec_tunnel - Manage IPsec Tunnels.
+
 v0.1.4
 ======
 

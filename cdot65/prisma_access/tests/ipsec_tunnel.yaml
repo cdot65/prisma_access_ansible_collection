@@ -1,0 +1,108 @@
+---
+- name: Create IPsec Tunnel
+  hosts: prisma
+  connection: local
+  gather_facts: False
+  become: False
+  collections:
+    - cdot65.prisma_access
+
+  tasks:
+    - name: Create IKE Gateway Ansible-IKE-1
+      cdot65.prisma_access.ike_gateway:
+        provider:
+          client_id: "{{ client_id }}"
+          client_secret: "{{ client_secret }}"
+          scope: "{{ scope }}"
+        name: "Ansible-IKE-1"
+        folder: "Service Connections"
+        peer_id:
+          id: "1.1.1.3"
+          type: "ipaddr"
+        authentication:
+          pre_shared_key: "paloalto1!"
+        peer_address:
+          ip: "1.1.1.2"
+        protocol:
+          ikev1:
+            ike_crypto_profile: "PaloAlto-Networks-IKE-Crypto"
+            dpd:
+              enable: True
+          ikev2:
+            ike_crypto_profile: "PaloAlto-Networks-IKE-Crypto"
+            dpd:
+              enable: True
+          version: "ikev2-preferred"
+        state: "present"
+
+    - name: Create IPsec Tunnel Ansible-IPsec-1
+      cdot65.prisma_access.ipsec_tunnel:
+        provider:
+          client_id: "{{ client_id }}"
+          client_secret: "{{ client_secret }}"
+          scope: "{{ scope }}"
+        name: "Ansible-IPsec-1"
+        folder: "Service Connections"
+        auto_key:
+          ike_gateway:
+            - name: "Ansible-IKE-1"
+          ipsec_crypto_profile: "PaloAlto-Networks-IPSec-Crypto"
+        anti_replay: True
+        tunnel_monitor:
+          enable: True
+          destination_ip: "192.168.100.1"
+        state: "present"
+
+- name: Delete IPsec Tunnel
+  hosts: prisma
+  connection: local
+  gather_facts: False
+  become: False
+  collections:
+    - cdot65.prisma_access
+
+  tasks:
+    - name: Delete IPsec Tunnel Ansible-IPsec-1
+      cdot65.prisma_access.ipsec_tunnel:
+        provider:
+          client_id: "{{ client_id }}"
+          client_secret: "{{ client_secret }}"
+          scope: "{{ scope }}"
+        name: "Ansible-IPsec-1"
+        folder: "Service Connections"
+        auto_key:
+          ike_gateway:
+            - name: "Ansible-IKE-1"
+          ipsec_crypto_profile: "PaloAlto-Networks-IPSec-Crypto"
+        anti_replay: True
+        tunnel_monitor:
+          enable: True
+          destination_ip: "192.168.100.1"
+        state: "absent"
+
+    - name: Delete IKE Gateway Ansible-IKE-1
+      cdot65.prisma_access.ike_gateway:
+        provider:
+          client_id: "{{ client_id }}"
+          client_secret: "{{ client_secret }}"
+          scope: "{{ scope }}"
+        name: "Ansible-IKE-1"
+        folder: "Service Connections"
+        peer_id:
+          id: "1.1.1.3"
+          type: "ipaddr"
+        authentication:
+          pre_shared_key: "paloalto1!"
+        peer_address:
+          ip: "1.1.1.2"
+        protocol:
+          ikev1:
+            ike_crypto_profile: "PaloAlto-Networks-IKE-Crypto"
+            dpd:
+              enable: True
+          ikev2:
+            ike_crypto_profile: "PaloAlto-Networks-IKE-Crypto"
+            dpd:
+              enable: True
+          version: "ikev2-preferred"
+        state: "absent"

@@ -14,18 +14,23 @@ class PrismaAccessSpec:
     """Prisma Access Spec."""
 
     @staticmethod
-    def tag_spec():
-        """Return the tag object spec."""
+    def address_group_spec():
+        """Return the address groups object spec."""
         return dict(
-            color=dict(
+            description=dict(
+                max_length=1023,
+                required=True,
                 type="str",
-                required=False,
-                default=False,
             ),
-            comments=dict(
-                type="str",
+            dynamic=dict(
                 required=False,
-                default=False,
+                type="dict",
+                options=dict(
+                    filter=dict(
+                        required=True,
+                        type="str",
+                    ),
+                ),
             ),
             folder=dict(
                 required=True,
@@ -39,6 +44,7 @@ class PrismaAccessSpec:
                 type="str",
             ),
             name=dict(
+                max_length=63,
                 required=True,
                 type="str",
             ),
@@ -64,6 +70,18 @@ class PrismaAccessSpec:
                 required=True,
                 choices=["absent", "present"],
                 type="str",
+            ),
+            static=dict(
+                elements="str",
+                max_items=64,
+                required=False,
+                type="list",
+            ),
+            tag=dict(
+                elements="str",
+                max_items=64,
+                required=False,
+                type="list",
             ),
         )
 
@@ -140,92 +158,12 @@ class PrismaAccessSpec:
         )
 
     @staticmethod
-    def address_group_spec():
-        """Return the address groups object spec."""
-        return dict(
-            description=dict(
-                max_length=1023,
-                required=True,
-                type="str",
-            ),
-            dynamic=dict(
-                required=False,
-                type="dict",
-                options=dict(
-                    filter=dict(
-                        required=True,
-                        type="str",
-                    ),
-                ),
-            ),
-            folder=dict(
-                required=True,
-                choices=[
-                    "GlobalProtect",
-                    "Mobile Users",
-                    "Remote Networks",
-                    "Service Connections",
-                    "Shared",
-                ],
-                type="str",
-            ),
-            name=dict(
-                max_length=63,
-                required=True,
-                type="str",
-            ),
-            provider=dict(
-                required=True,
-                type="dict",
-                options=dict(
-                    client_id=dict(
-                        required=True,
-                        type="str",
-                    ),
-                    client_secret=dict(
-                        required=True,
-                        type="str",
-                    ),
-                    scope=dict(
-                        required=True,
-                        type="str",
-                    ),
-                ),
-            ),
-            state=dict(
-                required=True,
-                choices=["absent", "present"],
-                type="str",
-            ),
-            static=dict(
-                elements="str",
-                max_items=64,
-                required=False,
-                type="list",
-            ),
-            tag=dict(
-                elements="str",
-                max_items=64,
-                required=False,
-                type="list",
-            ),
-        )
-
-    @staticmethod
     def ike_gateway_spec():
         """Return the IKE gateway object spec."""
         return dict(
             authentication=dict(
-                required=True,
-                type="dict",
                 options=dict(
-                    pre_shared_key=dict(
-                        required=False,
-                        type="str",
-                    ),
                     certificate=dict(
-                        required=False,
-                        type="dict",
                         options=dict(
                             allow_id_payload_mismatch=dict(
                                 required=False,
@@ -236,14 +174,14 @@ class PrismaAccessSpec:
                                 type="str",
                             ),
                             local_certificate=dict(
-                                required=False,
-                                type="dict",
                                 options=dict(
                                     local_certificate_name=dict(
                                         required=False,
                                         type="str",
                                     ),
                                 ),
+                                required=False,
+                                type="dict",
                             ),
                             strict_validation_revocation=dict(
                                 required=False,
@@ -254,11 +192,18 @@ class PrismaAccessSpec:
                                 type="bool",
                             ),
                         ),
+                        required=False,
+                        type="dict",
+                    ),
+                    pre_shared_key=dict(
+                        required=False,
+                        type="str",
                     ),
                 ),
+                required=True,
+                type="dict",
             ),
             folder=dict(
-                required=True,
                 choices=[
                     "Mobile Users",
                     "Mobile Users Container",
@@ -267,11 +212,10 @@ class PrismaAccessSpec:
                     "Service Connections",
                     "Shared",
                 ],
+                required=True,
                 type="str",
             ),
             local_id=dict(
-                required=False,
-                type="dict",
                 options=dict(
                     id=dict(
                         required=False,
@@ -282,6 +226,8 @@ class PrismaAccessSpec:
                         type="str",
                     ),
                 ),
+                required=False,
+                type="dict",
             ),
             name=dict(
                 max_length=63,
@@ -289,99 +235,99 @@ class PrismaAccessSpec:
                 type="str",
             ),
             peer_address=dict(
-                required=True,
-                type="dict",
                 options=dict(
-                    ip=dict(
-                        required=False,
-                        type="str",
-                    ),
-                    fqdn=dict(
-                        required=False,
-                        type="str",
-                        max_length=255,
-                    ),
                     dynamic=dict(
                         required=False,
                         type="bool",
                     ),
+                    fqdn=dict(
+                        max_length=255,
+                        required=False,
+                        type="str",
+                    ),
+                    ip=dict(
+                        required=False,
+                        type="str",
+                    ),
                 ),
-            ),
-            peer_id=dict(
                 required=True,
                 type="dict",
+            ),
+            peer_id=dict(
                 options=dict(
                     id=dict(
+                        max_length=1024,
                         required=True,
                         type="str",
-                        max_length=1024,
                     ),
                     type=dict(
-                        required=True,
-                        type="str",
                         choices=[
                             "ipaddr",
                             "keyid",
                             "fqdn",
                             "ufqdn",
                         ],
+                        required=True,
+                        type="str",
                     ),
                 ),
-            ),
-            protocol=dict(
                 required=True,
                 type="dict",
+            ),
+            protocol=dict(
                 options=dict(
                     ikev1=dict(
-                        required=False,
-                        type="dict",
                         options=dict(
                             dpd=dict(
-                                required=False,
-                                type="dict",
                                 options=dict(
                                     enable=dict(
                                         required=False,
                                         type="bool",
                                     ),
                                 ),
+                                required=False,
+                                type="dict",
                             ),
                             ike_crypto_profile=dict(
                                 required=False,
                                 type="str",
                             ),
                         ),
+                        required=False,
+                        type="dict",
                     ),
                     ikev2=dict(
-                        required=False,
-                        type="dict",
                         options=dict(
                             dpd=dict(
-                                required=False,
-                                type="dict",
                                 options=dict(
                                     enable=dict(
                                         required=False,
                                         type="bool",
                                     ),
                                 ),
+                                required=False,
+                                type="dict",
                             ),
                             ike_crypto_profile=dict(
                                 required=False,
                                 type="str",
                             ),
                         ),
+                        required=False,
+                        type="dict",
                     ),
                     version=dict(
-                        required=False,
-                        type="str",
                         choices=[
                             "ikev2-preferred",
                             "ikev1",
                             "ikev2",
                         ],
+                        required=False,
+                        type="str",
                     ),
                 ),
+                required=True,
+                type="dict",
             ),
             protocol_common=dict(
                 required=False,
@@ -443,17 +389,13 @@ class PrismaAccessSpec:
         """Return the IPsec Tunnel object spec."""
         return dict(
             anti_replay=dict(
+                default=False,
                 required=False,
                 type="bool",
-                default=False,
             ),
             auto_key=dict(
-                required=True,
-                type="dict",
                 options=dict(
                     ike_gateway=dict(
-                        required=True,
-                        type="list",
                         elements="dict",
                         options=dict(
                             name=dict(
@@ -461,15 +403,18 @@ class PrismaAccessSpec:
                                 type="str",
                             ),
                         ),
+                        required=True,
+                        type="list",
                     ),
                     ipsec_crypto_profile=dict(
                         required=True,
                         type="str",
                     ),
                 ),
+                required=True,
+                type="dict",
             ),
             folder=dict(
-                required=True,
                 choices=[
                     "Mobile Users",
                     "Mobile Users Container",
@@ -478,6 +423,7 @@ class PrismaAccessSpec:
                     "Service Connections",
                     "Shared",
                 ],
+                required=True,
                 type="str",
             ),
             name=dict(
@@ -486,8 +432,6 @@ class PrismaAccessSpec:
                 type="str",
             ),
             provider=dict(
-                required=True,
-                type="dict",
                 options=dict(
                     client_id=dict(
                         required=True,
@@ -502,31 +446,33 @@ class PrismaAccessSpec:
                         type="str",
                     ),
                 ),
+                required=True,
+                type="dict",
             ),
             state=dict(
-                required=True,
                 choices=["absent", "present"],
+                required=True,
                 type="str",
             ),
             tunnel_interface=dict(
+                default="tunnel",
                 required=False,
                 type="str",
-                default="tunnel",
             ),
             tunnel_monitor=dict(
-                required=True,
-                type="dict",
                 options=dict(
                     enable=dict(
+                        default=False,
                         required=False,
                         type="bool",
-                        default=False,
                     ),
                     destination_ip=dict(
                         required=False,
                         type="str",
                     ),
                 ),
+                required=True,
+                type="dict",
             ),
         )
 
@@ -641,5 +587,59 @@ class PrismaAccessSpec:
                 max_items=64,
                 required=True,
                 type="list",
+            ),
+        )
+
+    @staticmethod
+    def tag_spec():
+        """Return the tag object spec."""
+        return dict(
+            color=dict(
+                type="str",
+                required=False,
+                default=False,
+            ),
+            comments=dict(
+                type="str",
+                required=False,
+                default=False,
+            ),
+            folder=dict(
+                required=True,
+                choices=[
+                    "GlobalProtect",
+                    "Mobile Users",
+                    "Remote Networks",
+                    "Service Connections",
+                    "Shared",
+                ],
+                type="str",
+            ),
+            name=dict(
+                required=True,
+                type="str",
+            ),
+            provider=dict(
+                required=True,
+                type="dict",
+                options=dict(
+                    client_id=dict(
+                        required=True,
+                        type="str",
+                    ),
+                    client_secret=dict(
+                        required=True,
+                        type="str",
+                    ),
+                    scope=dict(
+                        required=True,
+                        type="str",
+                    ),
+                ),
+            ),
+            state=dict(
+                required=True,
+                choices=["absent", "present"],
+                type="str",
             ),
         )

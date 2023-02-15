@@ -20,7 +20,7 @@ def get_authenticated_session(module):
         )
 
         # jwt isn't a float, causing an error of the token not being valid yet
-        time.sleep(1.5)
+        time.sleep(1.1)
 
         return session
 

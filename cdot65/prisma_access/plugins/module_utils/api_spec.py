@@ -529,3 +529,117 @@ class PrismaAccessSpec:
                 ),
             ),
         )
+
+    @staticmethod
+    def service_connection_spec():
+        """Return the Service Connection object spec."""
+        return dict(
+            folder=dict(
+                choices=[
+                    "Mobile Users",
+                    "Mobile Users Container",
+                    "Mobile Users Explicit Proxy",
+                    "Remote Networks",
+                    "Service Connections",
+                    "Shared",
+                ],
+                required=True,
+                type="str",
+            ),
+            ipsec_tunnel=dict(
+                max_length=63,
+                required=True,
+                type="str",
+            ),
+            name=dict(
+                max_length=63,
+                required=True,
+                type="str",
+            ),
+            onboarding_type=dict(
+                choices=[
+                    "classic",
+                ],
+                default="classic",
+                required=False,
+                type="str",
+            ),
+            provider=dict(
+                options=dict(
+                    client_id=dict(
+                        required=True,
+                        type="str",
+                    ),
+                    client_secret=dict(
+                        required=True,
+                        type="str",
+                    ),
+                    scope=dict(
+                        required=True,
+                        type="str",
+                    ),
+                ),
+                required=True,
+                type="dict",
+            ),
+            region=dict(
+                choices=[
+                    "af-south-1",
+                    "ap-northeast-1",
+                    "ap-northeast-2",
+                    "ap-south-1",
+                    "ap-southeast-1",
+                    "ap-southeast-2",
+                    "asia-east1",
+                    "asia-east2",
+                    "asia-northeast2",
+                    "asia-south1",
+                    "asia-south2",
+                    "asia-southeast1",
+                    "asia-southeast2",
+                    "australia-southeast1",
+                    "australia-southeast2",
+                    "ca-central-1",
+                    "europe-north1",
+                    "europe-southwest1",
+                    "europe-west1",
+                    "europe-west3",
+                    "europe-west4",
+                    "europe-west6",
+                    "europe-west8",
+                    "europe-west9",
+                    "eu-central-1",
+                    "eu-west-1",
+                    "eu-west-2",
+                    "eu-west-3",
+                    "me-south-1",
+                    "me-west1",
+                    "northamerica-northeast2",
+                    "sa-east-1",
+                    "southamerica-east1",
+                    "southamerica-west1",
+                    "us-central1",
+                    "us-east-1",
+                    "us-east1",
+                    "us-east-2",
+                    "us-east4",
+                    "us-south1",
+                    "us-west-1",
+                    "us-west1",
+                    "us-west-2",
+                ],
+                required=True,
+                type="str",
+            ),
+            state=dict(
+                choices=["absent", "present"],
+                required=True,
+                type="str",
+            ),
+            subnets=dict(
+                elements="str",
+                max_items=64,
+                required=True,
+                type="list",
+            ),
+        )

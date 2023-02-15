@@ -1,6 +1,6 @@
 ---
-# CONFIGURE TAG OBJECTS
-- hosts: prisma
+- name: CREATE Tags
+  hosts: prisma
   connection: local
   gather_facts: False
   become: False
@@ -8,7 +8,7 @@
     - cdot65.prisma_access
 
   tasks:
-    - name: Create tags
+    - name: CREATE tags
       cdot65.prisma_access.tag:
         provider:
           client_id: "{{ client_id }}"
@@ -21,7 +21,16 @@
         state: "present"
       loop: "{{ prisma_tags }}"
 
-    - name: Create tags
+- name: DELETE Tags
+  hosts: prisma
+  connection: local
+  gather_facts: False
+  become: False
+  collections:
+    - cdot65.prisma_access
+
+  tasks:
+    - name: DELETE tags
       cdot65.prisma_access.tag:
         provider:
           client_id: "{{ client_id }}"

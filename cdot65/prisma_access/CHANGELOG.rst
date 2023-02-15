@@ -5,6 +5,20 @@ cdot65.prisma_access Release Notes
 .. contents:: Topics
 
 
+v0.1.6
+======
+
+Release Summary
+---------------
+
+Manage Service Connection objects
+
+
+New Modules
+-----------
+
+- cdot65.prisma_access.service_connection - Manage Service Connections.
+
 v0.1.5
 ======
 

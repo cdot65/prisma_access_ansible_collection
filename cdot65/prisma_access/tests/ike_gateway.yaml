@@ -1,6 +1,6 @@
 ---
-# TEST
-- hosts: prisma
+- name: CREATE IKE Gateways
+  hosts: prisma
   connection: local
   gather_facts: False
   become: False
@@ -121,8 +121,8 @@
           version: "ikev2-preferred"
         state: "present"
 
-# DELETE
-- hosts: prisma
+- name: DELETE IKE Gateways
+  hosts: prisma
   connection: local
   gather_facts: False
   become: False

@@ -1,6 +1,6 @@
 ---
-# CONFIGURE ADDRESS OBJECTS
-- hosts: prisma
+- name: CONFIGURE ADDRESS OBJECTS
+  hosts: prisma
   connection: local
   gather_facts: False
   become: False
@@ -62,6 +62,14 @@
         name: "{{ item.name }}"
         state: "present"
       loop: "{{ prisma_wildcard_address }}"
+
+- name: DELETE ADDRESS OBJECTS
+  hosts: prisma
+  connection: local
+  gather_facts: False
+  become: False
+  collections:
+    - cdot65.prisma_access
 
     - name: Delete ip-netmask address objects
       cdot65.prisma_access.address:

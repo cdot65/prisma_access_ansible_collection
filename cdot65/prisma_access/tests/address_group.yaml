@@ -1,6 +1,6 @@
 ---
-# CONFIGURE ADDRESS GROUP OBJECTS
-- hosts: prisma
+- name: CONFIGURE ADDRESS GROUP OBJECTS
+  hosts: prisma
   connection: local
   gather_facts: False
   become: False
@@ -51,6 +51,15 @@
         tag:
           - "Ansible"
 
+- name: DELETE ADDRESS GROUP OBJECTS
+  hosts: prisma
+  connection: local
+  gather_facts: False
+  become: False
+  collections:
+    - cdot65.prisma_access
+
+  tasks:
     - name: Remove address group
       cdot65.prisma_access.address_group:
         provider:

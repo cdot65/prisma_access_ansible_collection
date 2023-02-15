@@ -480,6 +480,40 @@ class PrismaAccessSpec:
     def service_connection_spec():
         """Return the Service Connection object spec."""
         return dict(
+            backup_sc=dict(
+                required=False,
+                type="str",
+            ),
+            bgp_peer=dict(
+                required=False,
+                type="dict",
+                options=dict(
+                    local_ip_address=dict(
+                        required=False,
+                        type="str",
+                    ),
+                    local_ipv6_address=dict(
+                        required=False,
+                        type="str",
+                    ),
+                    peer_ip_address=dict(
+                        required=False,
+                        type="str",
+                    ),
+                    peer_ipv6_address=dict(
+                        required=False,
+                        type="str",
+                    ),
+                    same_as_primary=dict(
+                        required=False,
+                        type="bool",
+                    ),
+                    secret=dict(
+                        required=False,
+                        type="str",
+                    ),
+                ),
+            ),
             folder=dict(
                 choices=[
                     "Mobile Users",
@@ -501,6 +535,82 @@ class PrismaAccessSpec:
                 max_length=63,
                 required=True,
                 type="str",
+            ),
+            nat_pool=dict(
+                required=False,
+                type="str",
+            ),
+            no_export_community=dict(
+                required=False,
+                type="str",
+                choices=[
+                    "Disabled",
+                    "Enabled-In",
+                    "Enabled-Out",
+                    "Enabled-Both",
+                ],
+            ),
+            protocol=dict(
+                required=False,
+                type="dict",
+                options=dict(
+                    bgp=dict(
+                        required=False,
+                        type="dict",
+                        options=dict(
+                            do_not_export_routes=dict(
+                                required=False,
+                                type="bool",
+                            ),
+                            enable=dict(
+                                required=False,
+                                type="bool",
+                            ),
+                            fast_failover=dict(
+                                required=False,
+                                type="bool",
+                            ),
+                            local_ip_address=dict(
+                                required=False,
+                                type="str",
+                            ),
+                            originate_default_route=dict(
+                                required=False,
+                                type="bool",
+                            ),
+                            peer_as=dict(
+                                required=False,
+                                type="str",
+                            ),
+                            peer_ip_address=dict(
+                                required=False,
+                                type="str",
+                            ),
+                            secret=dict(
+                                required=False,
+                                type="str",
+                            ),
+                            summarize_mobile_user_routes=dict(
+                                required=False,
+                                type="bool",
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            qos=dict(
+                required=False,
+                type="dict",
+                options=dict(
+                    enable=dict(
+                        required=False,
+                        type="bool",
+                    ),
+                    qos_profile=dict(
+                        required=False,
+                        type="str",
+                    ),
+                ),
             ),
             onboarding_type=dict(
                 choices=[
@@ -576,6 +686,14 @@ class PrismaAccessSpec:
                 ],
                 required=True,
                 type="str",
+            ),
+            secondary_ipsec_tunnel=dict(
+                required=False,
+                type="str",
+            ),
+            source_nat=dict(
+                required=False,
+                type="bool",
             ),
             state=dict(
                 choices=["absent", "present"],

@@ -1,0 +1,19 @@
+---
+- name: Push candidate configuration
+  hosts: prisma
+  connection: local
+  gather_facts: False
+  become: False
+  collections:
+    - cdot65.prisma_access
+
+  tasks:
+    - name: Push candidate configuration
+      cdot65.prisma_access.config_push:
+        provider:
+          client_id: "{{ client_id }}"
+          client_secret: "{{ client_secret }}"
+          scope: "{{ scope }}"
+        description: "Test push from Ansible"
+        folders:
+          - "Remote Networks"

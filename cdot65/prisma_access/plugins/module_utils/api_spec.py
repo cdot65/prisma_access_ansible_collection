@@ -158,6 +158,47 @@ class PrismaAccessSpec:
         )
 
     @staticmethod
+    def config_push():
+        """Return the address object spec."""
+        return dict(
+            description=dict(
+                max_length=1023,
+                required=False,
+                type="str",
+            ),
+            folders=dict(
+                choices=[
+                    "Mobile Users",
+                    "Mobile Users Container",
+                    "Mobile Users Explicit Proxy",
+                    "Remote Networks",
+                    "Service Connections",
+                ],
+                elements="str",
+                required=True,
+                type="list",
+            ),
+            provider=dict(
+                required=True,
+                type="dict",
+                options=dict(
+                    client_id=dict(
+                        required=True,
+                        type="str",
+                    ),
+                    client_secret=dict(
+                        required=True,
+                        type="str",
+                    ),
+                    scope=dict(
+                        required=True,
+                        type="str",
+                    ),
+                ),
+            ),
+        )
+
+    @staticmethod
     def ike_gateway_spec():
         """Return the IKE gateway object spec."""
         return dict(

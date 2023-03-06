@@ -1,0 +1,82 @@
+- name: CREATE Remote Networks
+  hosts: prisma
+  connection: local
+  gather_facts: False
+  become: False
+  collections:
+    - cdot65.prisma_access
+
+  tasks:
+    - name: CREATE IKE Gateway Ansible-RN-IKE-1
+      cdot65.prisma_access.ike_gateway:
+        provider:
+          client_id: "{{ client_id }}"
+          client_secret: "{{ client_secret }}"
+          scope: "{{ scope }}"
+        name: "Ansible-RN-IKE-1"
+        folder: "Remote Networks"
+        peer_id:
+          id: "73.206.3.129"
+          type: "ipaddr"
+        authentication:
+          pre_shared_key: "paloalto1!"
+        peer_address:
+          ip: "73.206.3.129"
+        protocol:
+          ikev1:
+            ike_crypto_profile: "PaloAlto-Networks-IKE-Crypto"
+            dpd:
+              enable: True
+          ikev2:
+            ike_crypto_profile: "PaloAlto-Networks-IKE-Crypto"
+            dpd:
+              enable: True
+          version: "ikev2-preferred"
+        state: "present"
+
+    - name: CREATE IPsec Tunnel Ansible-RN-IPsec-1
+      cdot65.prisma_access.ipsec_tunnel:
+        provider:
+          client_id: "{{ client_id }}"
+          client_secret: "{{ client_secret }}"
+          scope: "{{ scope }}"
+        name: "Ansible-RN-IPsec-1"
+        folder: "Remote Networks"
+        auto_key:
+          ike_gateway:
+            - name: "Ansible-RN-IKE-1"
+          ipsec_crypto_profile: "PaloAlto-Networks-IPSec-Crypto"
+        anti_replay: True
+        tunnel_monitor:
+          enable: True
+          destination_ip: "192.168.100.1"
+        state: "present"
+
+    - name: CREATE Remote Network Ansible-RN-1
+      cdot65.prisma_access.remote_network:
+        provider:
+          client_id: "{{ client_id }}"
+          client_secret: "{{ client_secret }}"
+          scope: "{{ scope }}"
+        name: "Ansible-RN-1"
+        folder: "Remote Networks"
+        ecmp_load_balancing: "disable"
+        ipsec_tunnel: "Ansible-RN-IPsec-1"
+        license_type: "FWAAS-AGGREGATE"
+        protocol:
+          bgp:
+            enable: True
+            local_ip_address: "192.168.1.1"
+            peer_as: "65001"
+            peer_ip_address: "192.168.1.2"
+            peering_type: "exchange-v4-over-v4"
+            secret: "thisisjustasecret"
+            summarize_mobile_user_routes: True
+        bgp_peer:
+          local_ip_address: "192.168.1.1"
+          peer_ip_address: "192.168.1.2"
+          secret: "thisisjustasecret"
+        region: "us-south1"
+        secondary_ipsec_tunnel: "GUI-Test-Tunnel2"
+        spn_name: "us-south-raspberry"
+        state: "present"

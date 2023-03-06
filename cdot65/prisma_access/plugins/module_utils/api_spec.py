@@ -521,6 +521,24 @@ class PrismaAccessSpec:
     def remote_network_spec():
         """Return the tag object spec."""
         return dict(
+            bgp_peer=dict(
+                options=dict(
+                    local_ip_address=dict(
+                        type="str",
+                        required=False,
+                    ),
+                    peer_ip_address=dict(
+                        type="str",
+                        required=False,
+                    ),
+                    secret=dict(
+                        type="str",
+                        required=False,
+                    ),
+                ),
+                required=False,
+                type="dict",
+            ),
             ecmp_load_balancing=dict(
                 choices=[
                     "enable",
@@ -530,7 +548,7 @@ class PrismaAccessSpec:
                 type="str",
             ),
             ecmp_tunnels=dict(
-                required=True,
+                required=False,
                 type="dict",
                 options=dict(
                     do_not_export_routes=dict(
@@ -601,7 +619,7 @@ class PrismaAccessSpec:
                 choices=[
                     "FWAAS-AGGREGATE",
                 ],
-                required=True,
+                required=False,
                 type="str",
             ),
             name=dict(
@@ -618,6 +636,7 @@ class PrismaAccessSpec:
                         type="dict",
                         options=dict(
                             do_not_export_routes=dict(
+                                default=True,
                                 required=False,
                                 type="bool",
                             ),
@@ -630,6 +649,7 @@ class PrismaAccessSpec:
                                 type="str",
                             ),
                             originate_default_route=dict(
+                                default=False,
                                 required=False,
                                 type="bool",
                             ),
@@ -660,24 +680,6 @@ class PrismaAccessSpec:
                                 type="bool",
                             ),
                         ),
-                    ),
-                    bgp_peer=dict(
-                        options=dict(
-                            local_ip_address=dict(
-                                type="str",
-                                required=False,
-                            ),
-                            peer_ip_address=dict(
-                                type="str",
-                                required=False,
-                            ),
-                            secret=dict(
-                                type="str",
-                                required=False,
-                            ),
-                        ),
-                        required=False,
-                        type="dict",
                     ),
                 ),
             ),

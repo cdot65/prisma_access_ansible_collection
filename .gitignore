@@ -25,3 +25,5 @@ cdot65/prisma_access/group_vars/
 cdot65/prisma_access/ansible.cfg
 cdot65/prisma_access/inventory.yaml
 cdot65/prisma_access/test.yaml
+cdot65/prisma_access/tests/servicenow.yml
+cdot65/prisma_access/tests/openapispec-3.yaml

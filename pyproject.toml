@@ -11,6 +11,7 @@ packages = [{include = "prisma_access_ansible_collection"}]
 python = "^3.9"
 ansible = "^7.1.0"
 panapi = {git = "git@github.com:cdot65/panapi.git"}
+prisma-sase = {git = "https://github.com/cdot65/prisma-sase-sdk-python.git", rev = "v0.1.0"}
 
 [tool.poetry.group.dev.dependencies]
 black = "^22.12.0"

@@ -1,5 +1,15 @@
 ancestor: null
 releases:
+  0.1.8:
+    changes:
+      release_summary: "Remote Networks support."
+    fragments:
+      - release-v0.1.8.yml
+    modules:
+      - description: Manage Remote Network configuration.
+        name: remote_network
+        namespace: ""
+    release_date: "2023-03-06"
   0.1.7:
     changes:
       release_summary: "Configuration push."

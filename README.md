@@ -1,3 +1,5 @@
+> This project is EOL'd, please switch to the Strata Cloud Manager Ansible Collection
+
 # Ansible Collection - cdot65.prisma_access
 
 - [Ansible Collection - cdot65.prisma\_access](#ansible-collection---cdot65prisma_access)
